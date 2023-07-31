@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "jsonwebtoken": "^9.0.1",
+    "jwt-autorefresh": "^0.2.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
