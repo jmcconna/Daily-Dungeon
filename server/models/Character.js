@@ -38,7 +38,6 @@ const characterSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Item',
   },
-
   inventory: {
     type: [
       {
