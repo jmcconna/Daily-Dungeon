@@ -1,5 +1,5 @@
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Home from './pages/Home';
 // import other pages as needed
 
@@ -13,9 +13,7 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <Switch>
-          <Route exact path="/" component={Home} />
-        </Switch>
+        <Route exact path="/" component={Home} />
       </Router>
     </ApolloProvider>
   );
