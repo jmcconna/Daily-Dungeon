@@ -28,25 +28,28 @@ const characterSchema = new Schema({
   },
   damage: {
     type: Number,
-    default: 10, 
+    default: 10,
   },
-  weapons: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Item',
-    },
-  ],
-  armor: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Item',
-    },
-  ],
+  weapon: {
+    type: Schema.Types.ObjectId,
+    ref: 'Item',
+  },
+  armor: {
+    type: Schema.Types.ObjectId,
+    ref: 'Item',
+  },
+
   inventory: {
     type: [
       {
+        item: {
           type: Schema.Types.ObjectId,
           ref: 'Item',
+        },
+        quantity: {
+          type: Number,
+          default: 1,
+        },
       },
     ],
     validate: [inventoryLimit, 'Exceeds inventory limit'],
@@ -57,16 +60,17 @@ const characterSchema = new Schema({
   },
   gameboardState: {
     type: String, // need to discuss this one, possibly save state as a string
-    default: '',
+    default: null,
+    validate: [gameStateValidator, 'Invalid game state format'],
   },
 });
 
 function inventoryLimit(inv) {
-  return inv.length <= 20; // set to 20 but we can change if needed
+  return inv.reduce((acc, curr) => acc + curr.quantity, 0) <= 20; // set to 20 but we can change as needed
 }
 
-// this will handle the level up logic. simple for now, but we can add more later   
-characterSchema.methods.levelUp = function() {
+// this will handle the level up logic. simple for now, but we can add more later
+characterSchema.methods.levelUp = function () {
   const experienceNeeded = this.level * 100;
 
   if (this.experience >= experienceNeeded) {
@@ -80,6 +84,16 @@ characterSchema.methods.levelUp = function() {
 
   return false; // No level up
 };
+
+// this will ensure gamestate is read correctly, assuming we go the JSON route
+function gameStateValidator(gameState) {
+  try {
+    JSON.parse(gameState);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
 
 const Character = model('Character', characterSchema);
 

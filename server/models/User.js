@@ -13,10 +13,11 @@ const userSchema = new Schema({
     minlength: [8, 'Password must be at least 8 characters long'],
     maxlength: [50, 'Password must not exceed 50 characters'],
     validate: {
-      validator: function(v) {
+      validator: function (v) {
         return /^(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,50}$/.test(v);
       },
-      message: 'Password must contain at least one number and one special character',
+      message:
+        'Password must contain at least one number and one special character',
     },
   },
   email: {
@@ -28,10 +29,12 @@ const userSchema = new Schema({
     type: Number,
     default: 0,
   },
-  characters: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Character',
-  }],
+  characters: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Character',
+    },
+  ],
 });
 
 // hash password before saving to database

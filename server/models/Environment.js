@@ -23,7 +23,6 @@ const environmentSchema = new Schema({
   badOutcomes: [
     {
       type: String,
-
     },
   ],
   monsters: [
@@ -33,8 +32,6 @@ const environmentSchema = new Schema({
     },
   ],
 });
-
-
 
 const Environment = model('Environment', environmentSchema);
 
