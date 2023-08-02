@@ -23,7 +23,6 @@ const environmentTypeDefs = gql`
       description: String!
       resources: [ID]
       badOutcomes: [String]
-      monsters: [ID]
     ): Environment!
     updateEnvironment(
       _id: ID!
@@ -32,7 +31,6 @@ const environmentTypeDefs = gql`
       description: String
       resources: [ID]
       badOutcomes: [String]
-      monsters: [ID]
     ): Environment
     deleteEnvironment(_id: ID!): Boolean!
   }
