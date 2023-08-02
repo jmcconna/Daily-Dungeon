@@ -5,18 +5,16 @@ const environmentResolvers = {
     getEnvironments: async () => {
       return await Environment.find()
         .populate('resources')
-        .populate('monsters');
     },
     getEnvironment: async (_, { _id }) => {
       return await Environment.findById(_id)
         .populate('resources')
-        .populate('monsters');
     },
   },
   Mutation: {
     createEnvironment: async (
       _,
-      { name, image, description, resources, badOutcomes, monsters }
+      { name, image, description, resources, badOutcomes }
     ) => {
       const environment = await Environment.create({
         name,
@@ -24,17 +22,16 @@ const environmentResolvers = {
         description,
         resources,
         badOutcomes,
-        monsters,
       });
       return environment;
     },
     updateEnvironment: async (
       _,
-      { _id, name, image, description, resources, badOutcomes, monsters }
+      { _id, name, image, description, resources, badOutcomes }
     ) => {
       return await Environment.findByIdAndUpdate(
         _id,
-        { name, image, description, resources, badOutcomes, monsters },
+        { name, image, description, resources, badOutcomes },
         { new: true }
       );
     },

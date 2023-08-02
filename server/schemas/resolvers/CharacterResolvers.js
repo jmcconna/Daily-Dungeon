@@ -73,6 +73,7 @@ const characterResolvers = {
       const result = await Character.findByIdAndDelete(_id);
       return !!result;
     },
+    
     // Inventory specific mutations
     equipWeapon: async (_, { characterId, itemId }) => {
       const character = await Character.findById(characterId);
