@@ -37,7 +37,7 @@ const Home = () => {
         <>
           <button onClick={handleLoginClick}>Login</button>
           <button onClick={handleSignupClick}>Signup</button>
-          <button disabled={true}>Continue as Guest</button>
+          <button>Continue as Guest</button>
         </>
       )}
       {isLoginMode && (
