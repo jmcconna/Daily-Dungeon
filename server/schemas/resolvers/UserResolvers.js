@@ -9,6 +9,9 @@ const userResolvers = {
     getUser: async (_, { _id }) => {
       return await User.findById(_id);
     },
+    getUsers: async () => {
+      return await User.find();
+    },
   },
 
   Mutation: {

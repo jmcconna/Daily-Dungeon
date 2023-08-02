@@ -6,14 +6,12 @@ const gameboardResolvers = {
       const gameboard = await Gameboard.findById(_id)
         .populate('environments')
         .populate('monsters')
-        .populate('loot');
       if (!gameboard) {
         throw new Error('Gameboard not found');
       }
 
       gameboard.environments = await spawnEnvironments(gameboard.environments);
       gameboard.monsters = await spawnMonsters(gameboard.monsters);
-      gameboard.loot = await spawnLoot(gameboard.loot);
 
       return gameboard;
     },
@@ -21,14 +19,13 @@ const gameboardResolvers = {
       return await Gameboard.find()
         .populate('environments')
         .populate('monsters')
-        .populate('loot');
     },
   },
 
   Mutation: {
     createGameboard: async (
       _,
-      { name, background, terrainImages, environments, monsters, loot }
+      { name, background, terrainImages, environments, monsters }
     ) => {
       return await Gameboard.create({
         name,
@@ -36,12 +33,11 @@ const gameboardResolvers = {
         terrainImages,
         environments,
         monsters,
-        loot,
       });
     },
     updateGameboard: async (
       _,
-      { _id, name, background, terrainImages, environments, monsters, loot }
+      { _id, name, background, terrainImages, environments, monsters }
     ) => {
       return await Gameboard.findByIdAndUpdate(
         _id,
@@ -51,7 +47,6 @@ const gameboardResolvers = {
           terrainImages,
           environments,
           monsters,
-          loot,
         },
         { new: true }
       );
@@ -80,19 +75,20 @@ async function spawnMonsters(monsters) {
   );
 }
 
-async function spawnLoot(loot) {
-    const randomValue = Math.random();
+// removing this for now. can look at adding it back if we have time to implement. 
+// async function spawnLoot(loot) {
+//     const randomValue = Math.random();
   
-    let lootCount = 0; // Default value. loot isn't easy to come by
+//     let lootCount = 0; // Default value. loot isn't easy to come by
   
-    if (randomValue < 0.05) {
-      lootCount = 2; // 5% chance for 2 items
-    } else if (randomValue < 0.15) {
-      lootCount = 1; // 10% chance for 1 item
-    }
+//     if (randomValue < 0.05) {
+//       lootCount = 2; // 5% chance for 2 items
+//     } else if (randomValue < 0.15) {
+//       lootCount = 1; // 10% chance for 1 item
+//     }
   
-    return [...Array(lootCount)].map(() => loot[Math.floor(Math.random() * loot.length)]);
-  }
+//     return [...Array(lootCount)].map(() => loot[Math.floor(Math.random() * loot.length)]);
+//   }
   
 
 module.exports = gameboardResolvers;

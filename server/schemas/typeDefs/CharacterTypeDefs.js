@@ -24,7 +24,8 @@ const characterTypeDefs = gql`
 
   extend type Query {
     getCharacter(_id: ID!): Character
-    getCharacters(user: ID!): [Character]
+    getCharacters: [Character]
+    getCharactersByUserID(user: ID!): [Character]
   }
 
   extend type Mutation {
