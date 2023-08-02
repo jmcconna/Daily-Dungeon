@@ -1,6 +1,7 @@
 import { gql } from '@apollo/client';
 
 // ----- USER QUERIES ----- //
+
 // Get User by ID //
 export const GET_USER_QUERY = gql`
   query GetUser($_id: ID!) {
@@ -25,6 +26,7 @@ export const GET_ALL_USERS_QUERY = gql`
 `;
 
 // ----- ENVIRONMENT QUERIES ----- //
+
 // Get All Environments //
 export const GET_ENVIRONMENTS_QUERY = gql`
   query GetEnvironments {
@@ -72,6 +74,7 @@ export const GET_ENVIRONMENT_QUERY = gql`
 `;
 
 // ----- ITEM QUERIES ----- //
+
 // Get All Items //
 export const GET_ITEMS_QUERY = gql`
   query GetItems {
@@ -99,6 +102,7 @@ export const GET_ITEM_QUERY = gql`
 `;
 
 // ----- MONSTER QUERIES ----- //
+
 // Get All Monsters //
 export const GET_MONSTERS_QUERY = gql`
   query GetMonsters {
@@ -138,6 +142,7 @@ export const GET_MONSTER_QUERY = gql`
 `;
 
 // ----- CHARACTER QUERIES ----- //
+
 // Get Character By ID //
 export const GET_CHARACTER_QUERY = gql`
   query GetCharacter($_id: ID!) {
