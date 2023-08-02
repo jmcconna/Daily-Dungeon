@@ -12,7 +12,13 @@ const characterResolvers = {
         .populate('weapon')
         .populate('armor');
     },
-    getCharacters: async (_, { user }) => {
+    getCharacters: async () => {
+      return await Character.find()
+        .populate('inventory.item')
+        .populate('weapon')
+        .populate('armor');
+    },
+    getCharactersByUserID: async (_, { user }) => {
       return await Character.find({ user })
         .populate('inventory.item')
         .populate('weapon')

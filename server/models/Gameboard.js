@@ -7,7 +7,6 @@ const gameboardSchema = new Schema({
   },
   background: {
     type: String,
-    required: true,
   },
   terrainImages: [
     {
@@ -24,12 +23,6 @@ const gameboardSchema = new Schema({
     {
       type: Schema.Types.ObjectId,
       ref: 'Monster',
-    },
-  ],
-  loot: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Item',
     },
   ],
 });
