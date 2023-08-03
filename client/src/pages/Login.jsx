@@ -35,7 +35,7 @@ const Login = ({ onClose }) => {
           <label htmlFor="password">Password:</label>
           <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </div>
-        <button type="submit" disabled={loading}>
+        <button type="submit" disabled={loading} to="/characterselect">
           Login
         </button>
         {error && <p>{error.message}</p>}

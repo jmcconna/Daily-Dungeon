@@ -9,7 +9,8 @@ export const LOGIN_MUTATION = gql`
       token
       user {
         id
-        username
+        email
+        password
       }
     }
   }
@@ -31,6 +32,7 @@ export const CREATE_USER_MUTATION = gql`
       id
       username
       email
+      password
     }
   }
 `;

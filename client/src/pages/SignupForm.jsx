@@ -41,7 +41,7 @@ const SignUpForm = ({ onClose }) => {
           <label htmlFor="password">Password:</label>
           <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </div>
-        <button type="submit" disabled={loading}>
+        <button type="submit" disabled={loading} to="/characterselect">
           Sign Up
         </button>
         {error && <p>{error.message}</p>}
