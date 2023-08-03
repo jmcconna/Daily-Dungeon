@@ -200,3 +200,89 @@ export const GET_CHARACTERS_QUERY = gql`
     }
   }
 `;
+
+// ----- GAMEBOARD QUERIES ----- //
+
+// Get Gameboard By ID //
+export const GET_GAMEBOARD_QUERY = gql`
+  query GetGameboard($_id: ID!) {
+    getGameboard(_id: $_id) {
+      id
+      name
+      background
+      terrainImages
+      environments {
+        id
+        name
+        image
+        description
+        resources {
+          id
+          name
+          type
+        }
+        monsters {
+          id
+          name
+          baseHealth
+          baseAttack
+        }
+      }
+      monsters {
+        id
+        name
+        image
+        baseHealth
+        baseAttack
+        loot {
+          id
+          name
+          type
+          price
+        }
+      }
+    }
+  }
+`;
+
+// Get All Gameboards //
+export const GET_GAMEBOARDS_QUERY = gql`
+  query GetGameboards {
+    getGameboards {
+      id
+      name
+      background
+      terrainImages
+      environments {
+        id
+        name
+        image
+        description
+        resources {
+          id
+          name
+          type
+        }
+        monsters {
+          id
+          name
+          baseHealth
+          baseAttack
+        }
+      }
+      monsters {
+        id
+        name
+        image
+        baseHealth
+        baseAttack
+        loot {
+          id
+          name
+          type
+          price
+        }
+      }
+    }
+  }
+`;
