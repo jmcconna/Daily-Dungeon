@@ -4,6 +4,7 @@ const characterTypeDefs = gql`
   type InventoryItem {
     item: Item!
     quantity: Int!
+    level: Int!
   }
 
   type Character {
@@ -12,14 +13,22 @@ const characterTypeDefs = gql`
     class: String!
     level: Int!
     experience: Int!
-    baseHealth: Int!
-    currentHealth: Int!
-    damage: Int!
+    baseHealth: Int
+    currentHealth: Int
+    basePhysicalAttack: Int!
+    baseMagicalAttack: Int!
+    skills: [Skill!]!
     weapon: Item
     armor: Item
     inventory: [InventoryItem]
     gold: Int!
     gameboardState: String
+  }
+
+  type Skill {
+    name: String!
+    type: String!
+    damage: Int!
   }
 
   extend type Query {
@@ -32,8 +41,6 @@ const characterTypeDefs = gql`
     createCharacter(
       user: ID!
       class: String!
-      baseHealth: Int!
-      currentHealth: Int!
     ): Character!
     updateCharacter(
       _id: ID!
@@ -42,7 +49,8 @@ const characterTypeDefs = gql`
       experience: Int
       baseHealth: Int
       currentHealth: Int
-      damage: Int
+      basePhysicalAttack: Int
+      baseMagicalAttack: Int
       gold: Int
       gameboardState: String
     ): Character

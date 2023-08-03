@@ -7,9 +7,11 @@ const itemTypeDefs = gql`
     type: String!
     image: String
     description: String!
-    level: Int!
-    damage: Int
+    tier: Int!          
+    physicalAttackBuff: Int 
+    magicalAttackBuff: Int  
     armor: Int
+    level: Int!
     range: Int
     price: Int!
     quantity: Int
@@ -26,9 +28,11 @@ const itemTypeDefs = gql`
       type: String!
       image: String
       description: String!
-      level: Int
-      damage: Int
+      tier: Int!           
+      physicalAttackBuff: Int 
+      magicalAttackBuff: Int  
       armor: Int
+      level: Int
       range: Int
       price: Int!
       quantity: Int
@@ -39,17 +43,19 @@ const itemTypeDefs = gql`
       type: String
       image: String
       description: String
-      level: Int
-      damage: Int
+      tier: Int           
+      physicalAttackBuff: Int 
+      magicalAttackBuff: Int  
       armor: Int
+      level: Int
       range: Int
       price: Int
       quantity: Int
     ): Item
     deleteItem(_id: ID!): Boolean!
-
     buyItem(characterId: ID!, itemId: ID!): Character!
     sellItem(characterId: ID!, itemId: ID!): Character!
+    
   }
 `;
 
