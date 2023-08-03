@@ -5,7 +5,7 @@ function CharacterCreate() {
     <div>
       <h1>Choose a class!</h1>
       <Link to={{ pathname: '/introduction'}}>
-        <button>Meet the Master</button>
+        <button>Begin Adventure</button>
       </Link>
     </div>
   );
