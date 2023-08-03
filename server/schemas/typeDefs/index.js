@@ -3,6 +3,7 @@ const characterTypeDefs = require('./CharacterTypeDefs');
 const itemTypeDefs = require('./ItemTypeDefs');
 const monsterTypeDefs = require('./MonsterTypeDefs');
 const environmentTypeDefs = require('./EnvironmentTypeDefs');
+const gameTypeDefs = require('./GameboardTypeDefs');
 
 module.exports = [
   userTypeDefs,
@@ -10,4 +11,5 @@ module.exports = [
   itemTypeDefs,
   monsterTypeDefs,
   environmentTypeDefs,
+  gameTypeDefs,
 ];

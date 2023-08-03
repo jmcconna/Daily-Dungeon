@@ -6,6 +6,10 @@ const characterSchema = new Schema({
     ref: 'User',
     required: true,
   },
+  name: {
+    type: String,
+    required: true,
+  },
   class: {
     type: String,
     required: true,
@@ -38,7 +42,6 @@ const characterSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Item',
   },
-
   inventory: {
     type: [
       {

@@ -3,6 +3,7 @@ const characterResolvers = require('./CharacterResolvers');
 const itemResolvers = require('./ItemResolvers');
 const monsterResolvers = require('./MonsterResolvers');
 const environmentResolvers = require('./EnvironmentResolvers');
+const gameboardResolvers = require('./GameboardResolvers');
 
 module.exports = {
   Query: {
@@ -11,6 +12,7 @@ module.exports = {
     ...itemResolvers.Query,
     ...monsterResolvers.Query,
     ...environmentResolvers.Query,
+    ...gameboardResolvers.Query,
   },
   Mutation: {
     ...userResolvers.Mutation,
@@ -18,5 +20,6 @@ module.exports = {
     ...itemResolvers.Mutation,
     ...monsterResolvers.Mutation,
     ...environmentResolvers.Mutation,
+    ...gameboardResolvers.Mutation,
   },
 };

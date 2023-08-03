@@ -12,7 +12,13 @@ const characterResolvers = {
         .populate('weapon')
         .populate('armor');
     },
-    getCharacters: async (_, { user }) => {
+    getCharacters: async () => {
+      return await Character.find()
+        .populate('inventory.item')
+        .populate('weapon')
+        .populate('armor');
+    },
+    getCharactersByUserID: async (_, { user }) => {
       return await Character.find({ user })
         .populate('inventory.item')
         .populate('weapon')
@@ -73,6 +79,7 @@ const characterResolvers = {
       const result = await Character.findByIdAndDelete(_id);
       return !!result;
     },
+    
     // Inventory specific mutations
     equipWeapon: async (_, { characterId, itemId }) => {
       const character = await Character.findById(characterId);

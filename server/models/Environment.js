@@ -25,12 +25,6 @@ const environmentSchema = new Schema({
       type: String,
     },
   ],
-  monsters: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Monster',
-    },
-  ],
 });
 
 const Environment = model('Environment', environmentSchema);
