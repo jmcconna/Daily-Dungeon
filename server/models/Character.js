@@ -6,6 +6,10 @@ const characterSchema = new Schema({
     ref: 'User',
     required: true,
   },
+  name: {
+    type: String,
+    required: true,
+  },
   class: {
     type: String,
     required: true,
