@@ -18,18 +18,27 @@ const itemSchema = new Schema({
     type: String,
     required: true,
   },
-  level: {
+  tier: {
     type: Number,
     default: 1,
-    max: 50,
+    enum: [1, 2], 
   },
-  damage: {
+  physicalAttackBuff: {
+    type: Number,
+    default: 0,
+  },
+  magicalAttackBuff: {
     type: Number,
     default: 0,
   },
   armor: {
     type: Number,
     default: 0,
+  },
+  level: {
+    type: Number,
+    default: 1,
+    max: 50,
   },
   range: {
     type: Number,
@@ -45,24 +54,34 @@ const itemSchema = new Schema({
   },
 });
 
-// made this similar to the levelUp method in Character.js, can adjust as needed
-itemSchema.methods.levelUp = function () {
-  const experienceNeeded = this.level * 100;
+// spending too long on this for now, will come back to it later
+// // made this similar to the levelUp method in Character.js, can adjust as needed
+// itemSchema.methods.levelUp = function (character) {
+//   const cost = this.levelUpCost();
 
-  if (this.experience >= experienceNeeded) {
-    this.level += 1;
-    this.experience -= experienceNeeded;
+//   if (character.gold < cost) {
+//     throw new Error('Not enough gold');
+//   }
 
-    if (this.type === 'weapon') {
-      this.damage += 5;
-    } else if (this.type === 'armor') {
-      this.armor += 5;
-    }
+//   character.gold -= cost; 
+//   this.level += 1;
 
-    return true;
-  }
-  return false;
-};
+//   // scales buffs based on tier
+//   if (this.tier === 1) {
+//     if (this.type === 'weapon') this.physicalAttackBuff += 5;
+//     if (this.type === 'armor') this.armor += 5;
+//   } else if (this.tier === 2) {
+//     if (this.type === 'weapon') this.physicalAttackBuff += 10;
+//     if (this.type === 'armor') this.armor += 10;
+//   }
+
+//   return true; 
+// };
+
+// // sets some scaling level up costs
+// itemSchema.methods.levelUpCost = function () {
+//   return (this.tier * 100) + (this.level * 50);
+// };
 
 const Item = model('Item', itemSchema);
 

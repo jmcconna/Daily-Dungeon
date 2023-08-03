@@ -13,7 +13,39 @@ const characterSchema = new Schema({
   class: {
     type: String,
     required: true,
+    enum: ['Paladin', 'Ranger', 'Sorcerer'],
+    set: function (className) {
+      const attributes = classAttributes[className];
+      this.baseHealth = attributes.baseHealth;
+      this.currentHealth = this.baseHealth;
+      this.basePhysicalAttack = attributes.basePhysicalAttack;
+      this.baseMagicalAttack = attributes.baseMagicalAttack;
+      this.skills = attributes.skills;
+      return className;
+    },
   },
+  baseHealth: {
+    type: Number,
+  },
+  currentHealth: {
+    type: Number,
+  },
+  basePhysicalAttack: {
+    type: Number,
+  },
+  baseMagicalAttack: {
+    type: Number,
+  },
+  skills: [
+    {
+      name: String,
+      type: {
+        type: String,
+        enum: ['Physical', 'Magical'],
+      },
+      damage: Number,
+    },
+  ],
   level: {
     type: Number,
     default: 1,
@@ -21,18 +53,6 @@ const characterSchema = new Schema({
   experience: {
     type: Number,
     default: 0,
-  },
-  baseHealth: {
-    type: Number,
-    required: true,
-  },
-  currentHealth: {
-    type: Number,
-    required: true,
-  },
-  damage: {
-    type: Number,
-    default: 10,
   },
   weapon: {
     type: Schema.Types.ObjectId,
@@ -48,6 +68,11 @@ const characterSchema = new Schema({
         item: {
           type: Schema.Types.ObjectId,
           ref: 'Item',
+        },
+        level: {
+          type: Number,
+          default: 1,
+          max: 50,
         },
         quantity: {
           type: Number,
@@ -68,25 +93,80 @@ const characterSchema = new Schema({
   },
 });
 
+// setting the base attributes for classes. we can change as we see fit
+const classAttributes = {
+  Paladin: {
+    baseHealth: 100,
+    basePhysicalAttack: 20,
+    baseMagicalAttack: 15,
+    skills: [
+      { name: 'Divine Strike', type: 'Physical', damage: 25 },
+      { name: 'Holy Light', type: 'Magical', damage: 20 },
+    ],
+  },
+  Ranger: {
+    baseHealth: 80,
+    basePhysicalAttack: 15,
+    baseMagicalAttack: 10,
+    skills: [
+      { name: 'Arrow Shot', type: 'Physical', damage: 18 },
+      { name: 'Wind Gust', type: 'Magical', damage: 15 },
+    ],
+  },
+  Sorcerer: {
+    baseHealth: 70,
+    basePhysicalAttack: 10,
+    baseMagicalAttack: 20,
+    skills: [
+      { name: 'Arcane Slash', type: 'Physical', damage: 12 },
+      { name: 'Fireball', type: 'Magical', damage: 25 },
+    ],
+  },
+};
+
+// makes sure they don't exceed their inventory limit
 function inventoryLimit(inv) {
   return inv.reduce((acc, curr) => acc + curr.quantity, 0) <= 20; // set to 20 but we can change as needed
 }
 
-// this will handle the level up logic. simple for now, but we can add more later
+// checks for a character level up and bumps their stats based on the defined amounts in following object
 characterSchema.methods.levelUp = function () {
   const experienceNeeded = this.level * 100;
 
   if (this.experience >= experienceNeeded) {
+    const attributes = levelUpAttributes[this.class];
+
     this.level += 1;
     this.experience -= experienceNeeded;
-    this.baseHealth += 10;
-    this.damage += 5;
+    this.baseHealth += attributes.healthIncrease;
+    this.basePhysicalAttack += attributes.physicalAttackIncrease;
+    this.baseMagicalAttack += attributes.magicalAttackIncrease;
 
     return true; // Successful level up
   }
 
   return false; // No level up
 };
+
+// sets how much a level up increases stats
+const levelUpAttributes = {
+  Paladin: {
+    healthIncrease: 10,
+    physicalAttackIncrease: 5,
+    magicalAttackIncrease: 3,
+  },
+  Ranger: {
+    healthIncrease: 8,
+    physicalAttackIncrease: 4,
+    magicalAttackIncrease: 4,
+  },
+  Sorcerer: {
+    healthIncrease: 6,
+    physicalAttackIncrease: 3,
+    magicalAttackIncrease: 5,
+  },
+};
+
 
 // this will ensure gamestate is read correctly, assuming we go the JSON route
 function gameStateValidator(gameState) {

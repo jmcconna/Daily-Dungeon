@@ -9,7 +9,7 @@ const seedGameboards = require('./gameboardSeeds');
 
 async function seedAll() {
   // await seedUsers();
-  // await seedCharacters();
+  await seedCharacters();
   // await seedItems();
   // await seedMonsters();
   // await seedEnvironments();

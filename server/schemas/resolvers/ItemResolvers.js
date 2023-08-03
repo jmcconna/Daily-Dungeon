@@ -1,4 +1,4 @@
-const { Item } = require('../../models');
+const { Item, Character } = require('../../models');
 const { UserInputError } = require('apollo-server-express');
 
 const itemResolvers = {
@@ -69,7 +69,7 @@ const itemResolvers = {
       );
 
       if (itemIndex === -1) {
-        throw new Error('Item not found in inventory');
+        throw new UserInputError('Item not found in inventory');
       }
 
       const inventoryItem = character.inventory[itemIndex];
@@ -88,6 +88,42 @@ const itemResolvers = {
 
       return character;
     },
+
+    // spending too long on this for now, will come back to it later
+    // // levelUpItem: async (_, { itemId, characterId }, { userId }) => {
+    // levelUpItem: async (_, { itemId, characterId }) => {
+    //   const character = await Character.findById(characterId)
+    //     .populate('inventory)')
+    //     .populate('weapon')
+    //     .populate('armor');
+    //   if (!character) {
+    //     throw new UserInputError('Character not found.');
+    //   }
+
+    //   const existingItemIndex = character.inventory.findIndex(
+    //     (i) => i.item.toString() === itemId)
+
+    //     character.inventory[existingItemIndex].level += 1;
+    //   // // Find the inventory item matching the given itemId
+    //   // const inventoryItem = character.inventory.find((invItem) =>
+    //   //   invItem.item.equals(itemId)
+    //   // );
+
+    //   // if (!inventoryItem) {
+    //   //   throw new Error('Character does not own this item');
+    //   // }
+
+    //   // const item = await Item.findById(inventoryItem.item);
+
+    //   // If the item level is at maximum, you might want to handle that here
+    //   if (character.inventory[existingItemIndex].level >= 50) {
+    //     throw new Error('Item is already at maximum level');
+    //   }
+
+    //   await character.save();
+
+    //   return { character};
+    // },
   },
 };
 
