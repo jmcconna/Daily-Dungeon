@@ -375,3 +375,74 @@ export const DELETE_MONSTER_MUTATION = gql`
     deleteMonster(_id: $_id)
   }
 `;
+
+// ----- GAMEBOARD MUTATIONS ----- //
+
+// Create Gameboard //
+export const CREATE_GAMEBOARD_MUTATION = gql`
+  mutation CreateGameboard(
+    $name: String!
+    $background: String!
+    $terrainImages: [String!]!
+    $environments: [ID!]!
+    $monsters: [ID!]!
+  ) {
+    createGameboard(
+      name: $name
+      background: $background
+      terrainImages: $terrainImages
+      environments: $environments
+      monsters: $monsters
+    ) {
+      id
+      name
+      background
+      terrainImages
+      environments {
+        id
+      }
+      monsters {
+        id
+      }
+    }
+  }
+`;
+
+// Update Gameboard //
+export const UPDATE_GAMEBOARD_MUTATION = gql`
+  mutation UpdateGameboard(
+    $_id: ID!
+    $name: String
+    $background: String
+    $terrainImages: [String!]
+    $environments: [ID!]
+    $monsters: [ID!]
+  ) {
+    updateGameboard(
+      _id: $_id
+      name: $name
+      background: $background
+      terrainImages: $terrainImages
+      environments: $environments
+      monsters: $monsters
+    ) {
+      id
+      name
+      background
+      terrainImages
+      environments {
+        id
+      }
+      monsters {
+        id
+      }
+    }
+  }
+`;
+
+// Delete Gameboard //
+export const DELETE_GAMEBOARD_MUTATION = gql`
+  mutation DeleteGameboard($_id: ID!) {
+    deleteGameboard(_id: $_id)
+  }
+`;
