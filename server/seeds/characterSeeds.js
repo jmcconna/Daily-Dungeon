@@ -4,7 +4,7 @@ const characterSeeds = [
   // User 1
   {
     user: '64caac74133998df2aace5a7',
-    class: 'Paladin',
+    class: 'Fighter',
   },
   {
     user: '64caac74133998df2aace5a7',
@@ -17,16 +17,16 @@ const characterSeeds = [
   },
   {
     user: '64caac74133998df2aace5a8',
-    class: 'Sorcerer',
+    class: 'Wizard',
   },
   // User 3
   {
     user: '64caac74133998df2aace5a9',
-    class: 'Paladin',
+    class: 'Fighter',
   },
   {
     user: '64caac74133998df2aace5a9',
-    class: 'Sorcerer',
+    class: 'Wizard',
   },
 ];
 
