@@ -1,15 +1,16 @@
-import { Component } from 'react';
+import { Component, createElement } from 'react';
+import ReactDOM from 'react-dom';
 import HeroImg from './images/Hero.png'
 import '../assets/css/gameboard.css'
 
 class GridSystem extends Component{
   constructor(matrix, playerX, playerY) {
     super();
-    this.matrix = matrix;
+    this.matrix = this.#randomTile(matrix);
     this.uiContext = this.#getContext(420, 580, '#000');
     this.outlineContext = this.#getContext(0, 0, '#444');
     this.topContext = this.#getContext(0, 0, '#111', true);
-    this.cellSize = 40;
+    this.cellSize = 20;
     this.padding = 2;
     // this.player = { x: playerX, y: playerY, image: "./images/Hero.png", color: 'red' };
     // this.matrix[playerY][playerX] = 2;
@@ -61,15 +62,16 @@ class GridSystem extends Component{
     const diffX = Math.abs(x); // remove this to restrict diagonal moves
     const diffY = Math.abs(y); // same as above
 
-    if (
+    if ((
       targetX >= 0 &&
       targetX < this.matrix[0].length &&
       targetY >= 0 &&
       targetY < this.matrix.length &&
-      this.matrix[targetY][targetX] === 0 &&
+      ((this.matrix[targetY][targetX] === 0) || (this.matrix[targetY][targetX] === -1)) &&
       diffX <= 1 && // remove this to restrict diagonal moves
-      diffY <= 1 // same as above
+      diffY <= 1 )// same as above
       //   ((Math.abs(x) === 1 && y === 0) || (Math.abs(y) === 1 && x === 0)) // add this back in to restrict diagonal moves
+      
     ) {
       return true;
     }
@@ -158,6 +160,7 @@ class GridSystem extends Component{
 
   #getContext(w, h, color = '#111', isTransparent = false) {
     this.canvas = document.createElement('canvas');
+    //this.canvas = reactDOM.createElement('canvas')
     this.ctx = this.canvas.getContext('2d');
     this.width = this.canvas.width = w;
     this.height = this.canvas.height = h;
@@ -172,6 +175,25 @@ class GridSystem extends Component{
     document.body.appendChild(this.canvas);
 
     return this.ctx;
+  }
+
+  #randomTile(matrix) {
+    for (let i = 0; i < matrix.length; i++) {
+      for (let h = 0; h < matrix[i].length; h++) {
+        if (matrix[i][h] === 0) {
+          const rando = Math.floor(Math.random() * 100);
+          console.log('rando');
+          console.log(rando);
+          if (rando <= 5) {
+            matrix[i][h] = -1;
+          }
+          
+        }
+      }
+    }
+
+    return matrix;
+    
   }
 
   // render() {
@@ -249,6 +271,11 @@ class GridSystem extends Component{
         const cellVal = this.matrix[row][col];
         let color = '#FFFFFF'; // Default color for empty cells
 
+        if (cellVal == -1) {
+          color = '#edb51a'
+        }
+
+        console.log('work')
         if (cellVal === 1) {
           color = '#0038c7';
         }
@@ -273,6 +300,8 @@ class GridSystem extends Component{
             this.cellSize,
             this.cellSize
           );
+
+          
         }
       }
     }
