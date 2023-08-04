@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 
 function CharacterCreate() {
-  const history = useHistory();
+  // const history = useHistory();
   const [name, setName] = useState('');
   const [selectedClass, setSelectedClass] = useState('');
 
