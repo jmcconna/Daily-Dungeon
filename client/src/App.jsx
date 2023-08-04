@@ -3,7 +3,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home.jsx';
 import CharacterCreate from './pages/CharacterCreate.jsx';
 import Introduction from './pages/Introduction.jsx';
-import Gameplay from './pages/Gameplay.jsx';
+// import Gameplay from './pages/Gameplay.jsx';
+import GridSystem from './components/Gridsystem.jsx';
+
+import gameboard from './utils/gameboards.js'
 // import other pages as needed
 
 // Create an Apollo Client instance
@@ -20,7 +23,7 @@ function App() {
         <Route exact path="/" element={<Home />} />
         <Route exact path="/charactercreate" element={<CharacterCreate />} />
         <Route exact path="/introduction" element={<Introduction />} />
-        <Route exact path='/gameplay' element={<Gameplay/>} />
+        <Route exact path='/gameplay' element={<GridSystem matrix={gameboard} playerX={3} playerY={3} />} />
         
       </Routes>
       </Router>
