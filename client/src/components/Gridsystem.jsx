@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import HeroImg from '../utils/images/Hero.png';
+import HeroImg from '../utils/images/Archer.png';
 
 import gameboard from '../utils/gameboards.js';
 
