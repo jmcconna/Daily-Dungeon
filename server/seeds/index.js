@@ -8,12 +8,12 @@ const seedEnvironments = require('./environmentSeeds');
 const seedGameboards = require('./gameboardSeeds');
 
 async function seedAll() {
-  await seedUsers();
-  await seedCharacters();
-  await seedItems();
-  await seedMonsters();
-  await seedEnvironments();
-  await seedGameboards();
+  // await seedUsers();
+  // await seedCharacters();
+  // await seedItems();
+  // await seedMonsters();
+  // await seedEnvironments();
+  // await seedGameboards();
 
   console.log('Your realm is ready!');
   process.exit(0);
