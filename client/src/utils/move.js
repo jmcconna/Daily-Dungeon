@@ -1,5 +1,8 @@
-class GridSystem {
+import { Component } from 'react';
+
+class GridSystem extends Component{
   constructor(matrix, playerX, playerY) {
+    super();
     this.matrix = matrix;
     this.uiContext = this.#getContext(420, 580, '#000');
     this.outlineContext = this.#getContext(0, 0, '#444');
@@ -219,6 +222,7 @@ class GridSystem {
 
   // starting from scratch to understand the code better
   render() {
+    
     // first it determines the height and width of the whole gameboard by adding this stuff up and then actually sets it to the canvas
     const w =
       (this.cellSize + this.padding) * this.matrix[0].length - this.padding;
@@ -274,6 +278,7 @@ class GridSystem {
     this.uiContext.font = '20px Courier';
     this.uiContext.fillStyle = 'white';
     this.uiContext.fillText('Grid Based System', 20, 30);
+    return;
   }
 }
 
@@ -292,4 +297,4 @@ const gridMatrix = [
 const gridSystem = new GridSystem(gridMatrix, 1, 1);
 gridSystem.render();
 
-
+export default GridSystem;

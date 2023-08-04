@@ -2,6 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import SignUpForm from './SignupForm';
 import Login from './Login';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -37,7 +38,10 @@ const Home = () => {
         <>
           <button onClick={handleLoginClick}>Login</button>
           <button onClick={handleSignupClick}>Signup</button>
-          <button>Continue as Guest</button>
+          <Link to={{ pathname: '/gameplay' }}>
+            <button>Continue as Guest</button>
+          </Link>
+          
         </>
       )}
       {isLoginMode && (
