@@ -3,8 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home.jsx';
 import CharacterCreate from './pages/CharacterCreate.jsx';
 import Introduction from './pages/Introduction.jsx';
-// import Gameplay from './pages/Gameplay.jsx';
+import GameLayout from './pages/GameLayout.jsx';
 import GridSystem from './components/Gridsystem.jsx';
+import './assets/css/gameboard.css';
 
 import gameboard from './utils/gameboards.js'
 // import other pages as needed
@@ -23,7 +24,7 @@ function App() {
         <Route exact path="/" element={<Home />} />
         <Route exact path="/charactercreate" element={<CharacterCreate />} />
         <Route exact path="/introduction" element={<Introduction />} />
-        <Route exact path='/gameplay' element={<GridSystem matrix={gameboard} playerX={3} playerY={3} />} />
+        <Route exact path='/gameplay' element={<GameLayout />} />
         
       </Routes>
       </Router>

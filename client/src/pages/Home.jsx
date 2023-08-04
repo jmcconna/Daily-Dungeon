@@ -35,14 +35,14 @@ const Home = () => {
     <Container>
       <h1>Prepare for Adventure!</h1>
       {!isLoginMode && !isSignupMode && (
-        <>
+        <div className='stack'>
           <button onClick={handleLoginClick}>Login</button>
           <button onClick={handleSignupClick}>Signup</button>
           <Link to={{ pathname: '/gameplay' }}>
             <button>Continue as Guest</button>
           </Link>
           
-        </>
+        </div>
       )}
       {isLoginMode && (
         <Login onSignupClick={handleSignupClick} onClose={handleCloseForms} />

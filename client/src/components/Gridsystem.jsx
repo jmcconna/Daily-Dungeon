@@ -1,67 +1,143 @@
 import React, { useState, useEffect, useRef } from 'react';
 import HeroImg from '../utils/images/Hero.png';
-import '../assets/css/gameboard.css';
 
-const GridSystem = (props) => {
-  const { matrix, playerX, playerY } = props;
-  const uiCanvasRef = useRef(null);
-  const outlineCanvasRef = useRef(null);
-  const topCanvasRef = useRef(null);
+import gameboard from '../utils/gameboards.js';
 
-  const [state, setState] = useState({
-    matrix: [...matrix],
+// randomly generates the tiles where monsters will spawn
+const randomTile = (matrix) => {
+  if(localStorage.getItem('randomTilesGenerated')) {
+    return matrix;
+  }
+  for (let i = 0; i < matrix.length; i++) {
+    for (let h = 0; h < matrix[i].length; h++) {
+      if (matrix[i][h] === 0) {
+        const rando = Math.floor(Math.random() * 100);
+        if (rando <= 5) {
+          // changed to 3 to avoid any uunforseen errors using falsy -1
+          matrix[i][h] = 3;
+        }
+      }
+    }
+    // this mwill make sure this doesn't run again on a refrsh or reload
+    localStorage.setItem('randomTilesGenerated', 'true');
+  }
+  return matrix;
+};
+
+// adding this in case we run out of time to work out the backend saving
+const saveStateToLocalStorage = (state) => {
+  const savedState = {
+    matrix: state.matrix,
     player: {
-      x: playerX,
-      y: playerY,
-      color: 'red',
-      imageObj: null,
+      ...state.player,
+      imageObj: state.player.imageObj ? state.player.imageObj.src : null,
     },
-  });
+  };
+  localStorage.setItem('gameState', JSON.stringify(savedState));
+};
+
+// const loadStateFromLocalStorage = (setState) => {
+//   const savedState = JSON.parse(localStorage.getItem('gameState'));
+//   if (savedState) {
+//     setState(savedState);
+//   }
+// };
+const getInitialState = (gameboard) => {
+  const savedState = JSON.parse(localStorage.getItem('gameState'));
+  if (savedState && savedState.player.imageObj) {
+    const imageObj = new Image();
+    imageObj.src = savedState.player.imageObj;
+    savedState.player.imageObj = imageObj;
+
+    if (savedState.matrix) {
+      savedState.matrix = [...savedState.matrix];
+    }
+
+    return savedState;
+  } else {
+    return {
+      matrix: randomTile([...gameboard.matrix]),
+      player: {
+        x: gameboard.playerX,
+        y: gameboard.playerY,
+        color: 'red',
+        imageObj: null,
+      },
+    };
+  }
+};
+const GridSystem = () => {
+  // const { matrix, playerX, playerY } = gameboard;
+  //! const uiCanvasRef = useRef(null);
+  const outlineCanvasRef = useRef(null);
+  //! const topCanvasRef = useRef(null);
+
+  const [state, setState] = useState(
+    //   {
+    //   matrix: [...matrix],
+    //   player: {
+    //     x: playerX,
+    //     y: playerY,
+    //     color: 'red',
+    //     imageObj: null,
+    //   },
+    // }
+    getInitialState(gameboard)
+  );
+  const imageObj = new Image();
+  imageObj.src = HeroImg;
+
+  imageObj.onload = () => {
+    setState((prevState) => ({
+      ...prevState,
+      player: {
+        ...prevState.player,
+        imageObj: imageObj,
+      },
+    }));
+  };
 
   // load image on initial render and update matrix
   useEffect(() => {
+    setState((prevState) => ({
+      ...prevState,
+      matrix: randomTile([...prevState.matrix]),
+    }));
     updateMatrix(state.player.y, state.player.x, 2);
-    const imageObj = new Image();
-    imageObj.onload = () => {
-      console.log(imageObj);
-      setState((prevState) => ({
-        ...prevState,
-        player: {
-          ...prevState.player,
-          imageObj: imageObj, 
-        },
-      }));
-    };
-    imageObj.src = HeroImg;
-  }, []); 
+  }, []);
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
     outlineCanvasRef.current.addEventListener('click', handleClick);
-    renderGameBoard();
-    console.log(state.player.x, state.player.y);
 
-    // Cleanup (similar to componentWillUnmount)
+    // render gameboard on every state change to show player moving
+    renderGameBoard();
+
+    // push state to local storage if it changes
+    saveStateToLocalStorage(state);
+
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [state.matrix, state.player.x, state.player.y, state.player.imageObj]);
 
-  const isValidMove = (x, y) => {
-    const targetX = state.player.x + x;
-    const targetY = state.player.y + y;
-    const diffX = Math.abs(x); // remove this to restrict diagonal moves
-    const diffY = Math.abs(y); // same as above
+  const isValidMove = (targetX, targetY, x, y) => {
+    // const targetX = state.player.x + x;
+    // const targetY = state.player.y + y;
+    // const diffX = Math.abs(x); // remove this to restrict diagonal moves
+    // const diffY = Math.abs(y); // same as above
 
     if (
       targetX >= 0 &&
       targetX < state.matrix[0].length &&
       targetY >= 0 &&
       targetY < state.matrix.length &&
-      state.matrix[targetY][targetX] === 0 &&
-      diffX <= 1 && // remove this to restrict diagonal moves
-      diffY <= 1 // same as above
-      // ((Math.abs(x) === 1 && y === 0) || (Math.abs(y) === 1 && x === 0)) // add this back in to restrict diagonal moves
+      // added extra condition to see if our guy is running into a monster
+      (state.matrix[targetY][targetX] === 0 ||
+        state.matrix[targetY][targetX] === 3) &&
+      // diffX <= 1 && // remove this to restrict diagonal moves
+      // diffY <= 1 // same as above
+      ((Math.abs(x) === 1 && y === 0) || (Math.abs(y) === 1 && x === 0)) // add this back in to restrict diagonal moves
     ) {
       return true;
     }
@@ -81,7 +157,9 @@ const GridSystem = (props) => {
 
   const handleKeyDown = ({ keyCode }) => {
     const move = (x, y) => {
-      if (isValidMove(x, y)) {
+      const targetX = state.player.x + x;
+      const targetY = state.player.y + y;
+      if (isValidMove(targetX, targetY, x, y)) {
         updateMatrix(state.player.y, state.player.x, 0);
         updateMatrix(state.player.y + y, state.player.x + x, 2);
         setState((prevState) => ({
@@ -93,6 +171,11 @@ const GridSystem = (props) => {
           },
         }));
         renderGameBoard();
+
+        //! i think this is where we can put in logic to call combat stuff
+        if (state.matrix[targetY][targetX] === 3) {
+          alert('A wild monster appeared!');
+        }
       }
     };
 
@@ -115,13 +198,12 @@ const GridSystem = (props) => {
   };
 
   const handleClick = (event) => {
-    
     const cellSize = 40;
     const padding = 2;
 
     // Grabs the location of the click and accounts for the border stuff
-    const x = event.clientX
-    const y = event.clientY
+    const x = event.clientX;
+    const y = event.clientY;
 
     // Takes the click location and figures out exactly which cell it is
     const col = Math.floor(x / (cellSize + padding));
@@ -156,13 +238,13 @@ const GridSystem = (props) => {
   const renderGameBoard = () => {
     if (
       !outlineCanvasRef.current ||
-      !uiCanvasRef.current ||
-      !topCanvasRef.current ||
+      // !uiCanvasRef.current ||
+      // !topCanvasRef.current ||
       !state.player.imageObj
     ) {
-      return; // Return early if any of the canvas references are not defined
+      return; // makes sure image and canvas are ready before rendering
     }
-    // Define cellSize and padding according to your use case
+
     const cellSize = 30; // Modify as needed
     const padding = 2; // Modify as needed
 
@@ -180,18 +262,22 @@ const GridSystem = (props) => {
     outlineCanvasRef.current.style.marginLeft = center.x;
     outlineCanvasRef.current.style.marginTop = center.y;
 
-    // Adjust topContext as needed (retrieve from ref)
-    topCanvasRef.current.style.marginLeft = center.x;
-    topCanvasRef.current.style.marginTop = center.y;
+    // // Adjust topContext as needed (retrieve from ref)
+    //! topCanvasRef.current.style.marginLeft = center.x;
+    //! topCanvasRef.current.style.marginTop = center.y;
 
     // Loops through every cell in the matrix
     for (let row = 0; row < state.matrix.length; row++) {
       for (let col = 0; col < state.matrix[row].length; col++) {
         const cellVal = state.matrix[row][col];
-        let color = '#FFFFFF'; // Default color for empty cells
+        let color; //
 
         if (cellVal === 1) {
           color = '#0038c7';
+        } else if (cellVal == 3) {
+          color = '#edb51a';
+        } else {
+          color = '#FFFFFF';
         }
 
         outlineContext.fillStyle = color;
@@ -218,38 +304,47 @@ const GridSystem = (props) => {
       }
     }
 
-    // Retrieve the context from the uiCanvasRef and update UI as needed
-    const uiContext = uiCanvasRef.current.getContext('2d');
-    uiContext.font = '20px Courier';
-    uiContext.fillStyle = 'white';
-    uiContext.fillText('Grid Based System', 20, 30);
+    // // Retrieve the context from the uiCanvasRef and update UI as needed
+    //! const uiContext = uiCanvasRef.current.getContext('2d');
+    //! uiContext.font = '20px Courier';
+    //! uiContext.fillStyle = 'white';
+    //! uiContext.fillText('Grid Based System', 20, 30);
   };
 
-  const cellSize = 30; // Define according to your use case
-  const padding = 2; // Define according to your use case
+  const cellSize = 30;
+  const padding = 2;
 
-  const w = (cellSize + padding) * props.matrix[0].length - padding;
-  const h = (cellSize + padding) * props.matrix.length - padding;
+  const w = (cellSize + padding) * gameboard.matrix[0].length - padding;
+  const h = (cellSize + padding) * gameboard.matrix.length - padding;
 
   const center = getCenter(w, h);
 
   return (
     <div>
-      <canvas
+      {/* <canvas
         ref={uiCanvasRef}
         width={420}
         height={580}
         style={{ ...center, background: '#000' }}
-      />
-    
-        <canvas
-          ref={outlineCanvasRef}
-          width={w}
-          height={h}
-          style={{ ...center, background: '#444' }}
-        />
-  
+      /> */}
+
       <canvas
+        ref={outlineCanvasRef}
+        width={w}
+        height={h}
+        style={{ ...center, background: '#444' }}
+      />
+      <br />
+      <button
+        onClick={() => {
+          localStorage.removeItem('gameState');
+          localStorage.removeItem('randomTilesGenerated');
+          setState(getInitialState(gameboard));
+          window.location.reload();
+        }}>
+        Reset
+      </button>
+      {/* <canvas
         ref={topCanvasRef}
         width={w}
         height={h}
@@ -258,7 +353,7 @@ const GridSystem = (props) => {
           background: '#111',
           backgroundColor: 'transparent',
         }}
-      />
+      /> */}
     </div>
   );
 };
