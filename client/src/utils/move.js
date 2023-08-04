@@ -1,12 +1,53 @@
-import { Component, createElement } from 'react';
-import ReactDOM from 'react-dom';
-import HeroImg from './images/Hero.png'
-import '../assets/css/gameboard.css'
+import { Component } from 'react';
+import HeroImg from './images/Hero.png';
+import '../assets/css/gameboard.css';
 
-class GridSystem extends Component{
-  constructor(matrix, playerX, playerY) {
-    super();
-    this.matrix = this.#randomTile(matrix);
+//this is the hard-coded array for the gameboard maze
+const maze1 = [
+  [1,   1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1],
+  [1,   0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  1],
+  [1,   0,  1,  1,  1,  0,  1,  0,  1,  1,  1,  1,  1,  1,  1,  0,  1,  0,  1,  1,  1,  1,  1,  0,  1,  0,  1,  0,  1],
+  [1,   0,  0,  0,  1,  0,  1,  0,  0,  0,  1,  0,  0,  0,  1,  0,  1,  0,  1,  0,  0,  0,  1,  0,  1,  0,  1,  0,  1],
+  [1,   1,  1,  1,  1,  0,  1,  1,  1,  1,  1,  0,  1,  0,  1,  0,  1,  0,  1,  1,  1,  0,  1,  0,  1,  1,  1,  0,  1],
+  [0,   0,  0,  0,  0,  0,  1,  0,  0,  0,  1,  0,  1,  0,  1,  0,  1,  0,  0,  0,  0,  0,  1,  0,  1,  0,  0,  0,  1],
+  [1,   1,  1,  1,  1,  0,  1,  0,  1,  0,  1,  1,  1,  0,  1,  0,  1,  1,  1,  1,  1,  1,  1,  0,  1,  0,  1,  0,  1],
+  [1,   0,  0,  0,  0,  0,  1,  0,  1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  1],
+  [1,   0,  1,  1,  1,  0,  1,  1,  1,  0,  1,  1,  1,  1,  1,  0,  1,  0,  1,  1,  1,  0,  1,  1,  1,  1,  1,  0,  1],
+  [1,   0,  1,  0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  0,  1,  0,  1,  0,  1,  0,  1,  0,  1,  0,  0,  0,  1,  0,  1],
+  [1,   0,  1,  0,  1,  1,  1,  1,  1,  1,  1,  0,  1,  1,  1,  0,  1,  0,  1,  0,  1,  0,  1,  0,  1,  1,  1,  1,  1],
+  [1,   0,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  0,  1,  0,  0,  0,  1,  0,  0,  0,  1],
+  [1,   0,  1,  0,  1,  0,  1,  0,  1,  1,  1,  0,  1,  1,  1,  1,  1,  0,  1,  0,  1,  0,  1,  0,  1,  0,  1,  1,  1],
+  [1,   0,  1,  0,  1,  0,  1,  0,  0,  0,  1,  0,  1,  0,  0,  0,  0,  0,  1,  0,  1,  0,  1,  0,  0,  0,  0,  0,  1],
+  [1,   0,  1,  0,  1,  0,  1,  1,  1,  0,  1,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  1,  1,  1,  1,  1,  1,  1],
+  [1,   0,  1,  0,  1,  0,  1,  0,  1,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  1],
+  [1,   0,  1,  0,  1,  0,  1,  0,  1,  0,  0,  0,  1,  1,  1,  1,  1,  1,  1,  0,  1,  1,  1,  1,  1,  0,  1,  0,  1],
+  [1,   0,  1,  0,  1,  1,  1,  0,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0,  1,  0,  1,  0,  0,  0,  1,  0,  0,  0,  1],
+  [1,   0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  1,  1,  1,  0,  1,  0,  1,  1,  1,  0,  1,  1,  1,  0,  1],
+  [1,   0,  1,  1,  1,  0,  1,  0,  1,  0,  0,  0,  1,  0,  0,  0,  1,  0,  1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  1],
+  [1,   0,  1,  0,  0,  0,  1,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  1,  0,  1,  1,  1,  1,  1,  0,  1,  0,  1],
+  [1,   0,  1,  0,  1,  1,  1,  0,  0,  0,  0,  0,  1,  0,  0,  0,  1,  0,  1,  0,  1,  0,  0,  0,  1,  0,  1,  0,  1],
+  [1,   0,  1,  0,  1,  0,  1,  1,  1,  1,  1,  0,  1,  0,  1,  0,  1,  0,  0,  0,  1,  0,  1,  1,  1,  0,  1,  1,  1],
+  [1,   0,  0,  0,  1,  0,  1,  0,  0,  0,  1,  0,  0,  0,  1,  0,  1,  0,  1,  0,  1,  0,  0,  0,  0,  0,  0,  0,  1],
+  [1,   1,  1,  1,  1,  0,  1,  0,  1,  0,  1,  0,  1,  0,  1,  0,  1,  0,  1,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1],
+  [1,   0,  0,  0,  0,  0,  0,  0,  1,  0,  1,  0,  1,  0,  1,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1],
+  [1,   0,  1,  1,  1,  1,  1,  1,  1,  0,  1,  1,  1,  0,  1,  1,  0,  1,  1,  1,  1,  0,  1,  1,  1,  1,  0,  1,  1],
+  [1,   0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  0,  1],
+  [1,   1,  1,  1,  1,  1,  1,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1],
+  ];
+
+  //starting position for the player in the maze
+  const startForMaze1 = [0, 5];
+
+export default class GridSystem extends Component{
+  constructor(props) {
+    super(props);
+    //props will include matrix (the gameboard array), playerX, and playerY for the intial position
+    this.matrix = maze1;
+    this.playerX = startForMaze1[0];
+    this.playerY = startForMaze1[1];
+   
+
+    this.matrix = this.#randomTile(this.matrix);
     this.uiContext = this.#getContext(420, 580, '#000');
     this.outlineContext = this.#getContext(0, 0, '#444');
     this.topContext = this.#getContext(0, 0, '#111', true);
@@ -16,20 +57,20 @@ class GridSystem extends Component{
     // this.matrix[playerY][playerX] = 2;
     // -------------------------------
     // i had to assign the player image here and force it to render syncronously on load. without this the image didn't load in time for the player to see it
-    this.player = { x: playerX, y: playerY, color: 'red' };
+    this.player = { x: this.playerX, y: this.playerY, color: 'red' };
     this.player.imageObj = new Image();
     this.player.imageObj.onload = () => {
       this.render();
     };
     this.player.imageObj.src = HeroImg;
-    this.matrix[playerY][playerX] = 2;
+    this.matrix[this.playerY][this.playerX] = 2;
 
     /*
         this.canvas = document.querySelector('#canvas');
 
         this.ctx = this.canvas.getContext("2d");
 */
-    document.addEventListener('keydown', this.#movePlayer);
+    window.addEventListener('keydown', this.#movePlayer);
     // trying to add on click functionality
     this.outlineContext.canvas.addEventListener('click', this.#handleClick);
   }
@@ -83,6 +124,7 @@ class GridSystem extends Component{
   }
 
   #movePlayer = ({ keyCode }) => {
+  console.log("Move player called");
     if (keyCode === 37) {
       if (this.#isValidMove(-1, 0)) {
         this.#updateMatrix(this.player.y, this.player.x, 0);
@@ -182,8 +224,6 @@ class GridSystem extends Component{
       for (let h = 0; h < matrix[i].length; h++) {
         if (matrix[i][h] === 0) {
           const rando = Math.floor(Math.random() * 100);
-          console.log('rando');
-          console.log(rando);
           if (rando <= 5) {
             matrix[i][h] = -1;
           }
@@ -191,7 +231,7 @@ class GridSystem extends Component{
         }
       }
     }
-
+    console.log(matrix);
     return matrix;
     
   }
@@ -275,7 +315,6 @@ class GridSystem extends Component{
           color = '#edb51a'
         }
 
-        console.log('work')
         if (cellVal === 1) {
           color = '#0038c7';
         }
@@ -313,51 +352,3 @@ class GridSystem extends Component{
   }
 }
 
-// const gridMatrix = [
-//   [1, 1, 1, 1, 1, 1, 1],
-//   [1, 0, 0, 0, 0, 0, 1],
-//   [1, 0, 0, 0, 0, 0, 1],
-//   [1, 0, 0, 0, 0, 0, 1],
-//   [1, 0, 1, 1, 1, 0, 1],
-//   [1, 0, 0, 0, 1, 0, 1],
-//   [1, 0, 1, 1, 1, 0, 1],
-//   [1, 0, 0, 0, 0, 0, 1],
-//   [1, 1, 1, 1, 1, 1, 1],
-// ];
-
-const gridMatrix = [
-  [1,   1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1],
-  [1,   0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  1],
-  [1,   0,  1,  1,  1,  0,  1,  0,  1,  1,  1,  1,  1,  1,  1,  0,  1,  0,  1,  1,  1,  1,  1,  0,  1,  0,  1,  0,  1],
-  [1,   0,  0,  0,  1,  0,  1,  0,  0,  0,  1,  0,  0,  0,  1,  0,  1,  0,  1,  0,  0,  0,  1,  0,  1,  0,  1,  0,  1],
-  [1,   1,  1,  1,  1,  0,  1,  1,  1,  1,  1,  0,  1,  0,  1,  0,  1,  0,  1,  1,  1,  0,  1,  0,  1,  1,  1,  0,  1],
-  [0,   0,  0,  0,  0,  0,  1,  0,  0,  0,  1,  0,  1,  0,  1,  0,  1,  0,  0,  0,  0,  0,  1,  0,  1,  0,  0,  0,  1],
-  [1,   1,  1,  1,  1,  0,  1,  0,  1,  0,  1,  1,  1,  0,  1,  0,  1,  1,  1,  1,  1,  1,  1,  0,  1,  0,  1,  0,  1],
-  [1,   0,  0,  0,  0,  0,  1,  0,  1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  1],
-  [1,   0,  1,  1,  1,  0,  1,  1,  1,  0,  1,  1,  1,  1,  1,  0,  1,  0,  1,  1,  1,  0,  1,  1,  1,  1,  1,  0,  1],
-  [1,   0,  1,  0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  0,  1,  0,  1,  0,  1,  0,  1,  0,  1,  0,  0,  0,  1,  0,  1],
-  [1,   0,  1,  0,  1,  1,  1,  1,  1,  1,  1,  0,  1,  1,  1,  0,  1,  0,  1,  0,  1,  0,  1,  0,  1,  1,  1,  1,  1],
-  [1,   0,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  0,  1,  0,  0,  0,  1,  0,  0,  0,  1],
-  [1,   0,  1,  0,  1,  0,  1,  0,  1,  1,  1,  0,  1,  1,  1,  1,  1,  0,  1,  0,  1,  0,  1,  0,  1,  0,  1,  1,  1],
-  [1,   0,  1,  0,  1,  0,  1,  0,  0,  0,  1,  0,  1,  0,  0,  0,  0,  0,  1,  0,  1,  0,  1,  0,  0,  0,  0,  0,  1],
-  [1,   0,  1,  0,  1,  0,  1,  1,  1,  0,  1,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  1,  1,  1,  1,  1,  1,  1],
-  [1,   0,  1,  0,  1,  0,  1,  0,  1,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  1],
-  [1,   0,  1,  0,  1,  0,  1,  0,  1,  0,  0,  0,  1,  1,  1,  1,  1,  1,  1,  0,  1,  1,  1,  1,  1,  0,  1,  0,  1],
-  [1,   0,  1,  0,  1,  1,  1,  0,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0,  1,  0,  1,  0,  0,  0,  1,  0,  0,  0,  1],
-  [1,   0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  1,  1,  1,  0,  1,  0,  1,  1,  1,  0,  1,  1,  1,  0,  1],
-  [1,   0,  1,  1,  1,  0,  1,  0,  1,  0,  0,  0,  1,  0,  0,  0,  1,  0,  1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  1],
-  [1,   0,  1,  0,  0,  0,  1,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  1,  0,  1,  1,  1,  1,  1,  0,  1,  0,  1],
-  [1,   0,  1,  0,  1,  1,  1,  0,  0,  0,  0,  0,  1,  0,  0,  0,  1,  0,  1,  0,  1,  0,  0,  0,  1,  0,  1,  0,  1],
-  [1,   0,  1,  0,  1,  0,  1,  1,  1,  1,  1,  0,  1,  0,  1,  0,  1,  0,  0,  0,  1,  0,  1,  1,  1,  0,  1,  1,  1],
-  [1,   0,  0,  0,  1,  0,  1,  0,  0,  0,  1,  0,  0,  0,  1,  0,  1,  0,  1,  0,  1,  0,  0,  0,  0,  0,  0,  0,  1],
-  [1,   1,  1,  1,  1,  0,  1,  0,  1,  0,  1,  0,  1,  0,  1,  0,  1,  0,  1,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1],
-  [1,   0,  0,  0,  0,  0,  0,  0,  1,  0,  1,  0,  1,  0,  1,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1],
-  [1,   0,  1,  1,  1,  1,  1,  1,  1,  0,  1,  1,  1,  0,  1,  1,  0,  1,  1,  1,  1,  0,  1,  1,  1,  1,  0,  1,  1],
-  [1,   0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  0,  1,  0,  0,  0,  0,  0,  1,  0,  0,  0,  1],
-  [1,   1,  1,  1,  1,  1,  1,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1],
-  ];
-
-const gridSystem = new GridSystem(gridMatrix, 1, 1);
-gridSystem.render();
-
-export default GridSystem;

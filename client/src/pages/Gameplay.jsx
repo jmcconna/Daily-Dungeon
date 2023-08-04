@@ -1,4 +1,13 @@
-import GridSystem from '../components/Gridsystem.jsx';
-import { useRef, useEffect, useState } from 'react';
+import GridSystem from "../utils/move.js";
 
+
+
+const Game = () => {
+  return (
+    <div>
+      <h1>Have fun!</h1>
+      <GridSystem />
+    </div>
+  );
+};
 
