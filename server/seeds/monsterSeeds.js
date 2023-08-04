@@ -31,6 +31,13 @@ const monsterSeeds = [
       baseAttack: 18,
       loot: ['64caad495be60356d84127b9', '64caad495be60356d84127b8'],
     },
+    {
+      name: 'Dov the Infernal',
+      baseHealth: 350,
+      baseAttack: 20,
+      loot: ['64caad495be60356d84127b9', '64caad495be60356d84127b8'],
+    },
+
   ];
   
   const seedMonsters = async () => {

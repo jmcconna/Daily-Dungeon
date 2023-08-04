@@ -13,7 +13,7 @@ const characterSchema = new Schema({
   class: {
     type: String,
     required: true,
-    enum: ['Paladin', 'Ranger', 'Sorcerer'],
+    enum: ['Fighter', 'Ranger', 'Wizard'],
     set: function (className) {
       const attributes = classAttributes[className];
       this.baseHealth = attributes.baseHealth;
@@ -95,13 +95,13 @@ const characterSchema = new Schema({
 
 // setting the base attributes for classes. we can change as we see fit
 const classAttributes = {
-  Paladin: {
+  Fighter: {
     baseHealth: 100,
     basePhysicalAttack: 20,
     baseMagicalAttack: 15,
     skills: [
-      { name: 'Divine Strike', type: 'Physical', damage: 25 },
-      { name: 'Holy Light', type: 'Magical', damage: 20 },
+      { name: 'Quick Strike', type: 'Physical', damage: 25 },
+      { name: 'Flame Blade', type: 'Magical', damage: 20 },
     ],
   },
   Ranger: {
@@ -110,16 +110,16 @@ const classAttributes = {
     baseMagicalAttack: 10,
     skills: [
       { name: 'Arrow Shot', type: 'Physical', damage: 18 },
-      { name: 'Wind Gust', type: 'Magical', damage: 15 },
+      { name: 'Entangling Roots', type: 'Magical', damage: 15 },
     ],
   },
-  Sorcerer: {
+  SWizard: {
     baseHealth: 70,
     basePhysicalAttack: 10,
     baseMagicalAttack: 20,
     skills: [
-      { name: 'Arcane Slash', type: 'Physical', damage: 12 },
-      { name: 'Fireball', type: 'Magical', damage: 25 },
+      { name: 'Magic Missile', type: 'Physical', damage: 12 },
+      { name: 'Lightning Bolt', type: 'Magical', damage: 25 },
     ],
   },
 };
@@ -150,7 +150,7 @@ characterSchema.methods.levelUp = function () {
 
 // sets how much a level up increases stats
 const levelUpAttributes = {
-  Paladin: {
+  Fighter: {
     healthIncrease: 10,
     physicalAttackIncrease: 5,
     magicalAttackIncrease: 3,
@@ -160,7 +160,7 @@ const levelUpAttributes = {
     physicalAttackIncrease: 4,
     magicalAttackIncrease: 4,
   },
-  Sorcerer: {
+  Wizard: {
     healthIncrease: 6,
     physicalAttackIncrease: 3,
     magicalAttackIncrease: 5,
