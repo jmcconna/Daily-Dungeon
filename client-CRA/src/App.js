@@ -8,9 +8,6 @@ import PageNotFound from './pages/404.jsx';
 import './assets/css/gameboard.css';
 
 
-import gameboard from './utils/gameboards.js'
-// import other pages as needed
-
 // Create an Apollo Client instance
 const client = new ApolloClient({
   uri: 'http://your-graphql-api-endpoint',

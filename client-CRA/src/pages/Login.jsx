@@ -26,12 +26,12 @@ const Login = ({ onClose }) => {
   return (
     <div>
       <h2>Login</h2>
-      <form onSubmit={handleLogin}>
-        <div>
+      <form onSubmit={handleLogin} className='stack'>
+        <div className='stack'>
           <label htmlFor="email">Email:</label>
           <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
-        <div>
+        <div className='stack'>
           <label htmlFor="password">Password:</label>
           <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </div>

@@ -84,3 +84,7 @@ button:focus-visible {
 .stack > * + * {
   margin-block-start: var(--space, 1.5rem);
 } 
+
+form {
+  inline-size: clamp(20ch, 35ch, 50ch);
+}
