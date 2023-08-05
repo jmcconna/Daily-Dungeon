@@ -15,7 +15,7 @@ function CharacterCreate() {
   };
 
   const handleCreateCharacter = () => {
-    history.push('/introduction');
+    // history.push('/introduction');
   };
 
   return (
