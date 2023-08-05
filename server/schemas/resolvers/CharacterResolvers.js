@@ -44,6 +44,7 @@ const characterResolvers = {
       _,
       {
         _id,
+        name,
         class: charClass,
         experience,
         currentHealth,
@@ -73,6 +74,7 @@ const characterResolvers = {
       }
 
       const updateObject = {
+        name,
         level: character.level,
         experience: character.experience,
         baseHealth: character.baseHealth,

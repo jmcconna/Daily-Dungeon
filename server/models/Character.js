@@ -113,7 +113,7 @@ const classAttributes = {
       { name: 'Entangling Roots', type: 'Magical', damage: 15 },
     ],
   },
-  SWizard: {
+  Wizard: {
     baseHealth: 70,
     basePhysicalAttack: 10,
     baseMagicalAttack: 20,

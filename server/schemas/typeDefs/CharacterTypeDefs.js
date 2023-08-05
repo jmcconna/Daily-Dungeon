@@ -9,6 +9,7 @@ const characterTypeDefs = gql`
 
   type Character {
     _id: ID!
+    name: String!
     user: User!
     class: String!
     level: Int!
@@ -40,10 +41,12 @@ const characterTypeDefs = gql`
   extend type Mutation {
     createCharacter(
       user: ID!
+      name: String!
       class: String!
     ): Character!
     updateCharacter(
       _id: ID!
+      name: String
       class: String
       level: Int
       experience: Int
