@@ -1,4 +1,4 @@
-export default {
+const gameboard1 = {
   matrix: [
   [
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -120,3 +120,5 @@ export default {
 playerX: 0,
 playerY: 5,
 };
+
+module.exports = gameboard1;

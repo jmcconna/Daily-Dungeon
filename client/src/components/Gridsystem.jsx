@@ -5,7 +5,7 @@ import gameboard from '../utils/gameboards.js';
 
 // randomly generates the tiles where monsters will spawn
 const randomTile = (matrix) => {
-  if(localStorage.getItem('randomTilesGenerated')) {
+  if (localStorage.getItem('randomTilesGenerated')) {
     return matrix;
   }
   for (let i = 0; i < matrix.length; i++) {
@@ -245,7 +245,7 @@ const GridSystem = () => {
       return; // makes sure image and canvas are ready before rendering
     }
 
-    const cellSize = 30; // Modify as needed
+    const cellSize = 20; // Modify as needed
     const padding = 2; // Modify as needed
 
     // Determine the height and width of the whole gameboard
