@@ -4,6 +4,7 @@ import Home from './pages/Home.jsx';
 import CharacterCreate from './pages/CharacterCreate.jsx';
 import Introduction from './pages/Introduction.jsx';
 import GameLayout from './pages/GameLayout.jsx';
+import { Combat } from './pages/Combat/App/Combat.jsx'
 import PageNotFound from './pages/404.jsx';
 import './assets/css/gameboard.css';
 
@@ -23,6 +24,7 @@ function App() {
         <Route exact path="/charactercreate" element={<CharacterCreate />} />
         <Route exact path="/introduction" element={<Introduction />} />
         <Route exact path='/gameplay' element={<GameLayout />} />
+        <Route exact path='/combat' element={<Combat />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       </Router>
