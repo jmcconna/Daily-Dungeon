@@ -27,7 +27,7 @@ const characterResolvers = {
   },
 
   Mutation: {
-    createCharacter: async (_, { user, class: charClass }) => {
+    createCharacter: async (_, { user, name, class: charClass }) => {
       const existingUser = await User.findById(user);
       if (!existingUser) {
         throw new UserInputError('Invalid user. Please try again.');
@@ -35,6 +35,7 @@ const characterResolvers = {
 
       const character = await Character.create({
         user,
+        name,
         class: charClass,
       });
 
