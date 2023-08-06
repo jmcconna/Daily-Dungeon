@@ -3,9 +3,10 @@ const { ApolloServer } = require('apollo-server-express');
 const path = require('path');
 const { authMiddleware } = require('./utils/auth');
 const { typeDefs, resolvers } = require('./schemas');
+const cors = require('cors')
 const db = require('./config/connection');
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3002;
 const app = express();
 const server = new ApolloServer({
   typeDefs,
@@ -15,6 +16,8 @@ const server = new ApolloServer({
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(cors(
+))
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
@@ -24,14 +27,14 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
-app.use((req, res, next) => {
-  res.status(404).send('Page not found');
-});
-
 // Create a new instance of an Apollo server with the GraphQL schema
 const startApolloServer = async () => {
   await server.start();
   server.applyMiddleware({ app });
+  
+  app.use((req, res, next) => {
+    res.status(404).send('Page not found');
+  });
   
   db.once('open', () => {
     app.listen(PORT, () => {
@@ -40,6 +43,8 @@ const startApolloServer = async () => {
     })
   })
   };
+
+  
   
 // Call the async function to start the server
   startApolloServer();

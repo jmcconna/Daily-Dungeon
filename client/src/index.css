@@ -89,6 +89,17 @@ form {
   inline-size: clamp(20ch, 35ch, 50ch);
 }
 
+.center {
+  box-sizing: content-box;
+  margin-inline: auto;
+  max-inline-size: 60ch;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+
 /* MonsterModal */
 
 dialog {
