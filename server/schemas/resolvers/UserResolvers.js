@@ -15,7 +15,7 @@ const userResolvers = {
 
   Mutation: {
     loginUser: async (_, { email, password }) => {
-      const user = await User.findOne({ email });
+      const user = await User.findOne({ email }).populate('characters');
       if (!user) {
         throw new AuthenticationError(
           'There is no account associated with that email. Please check and try again.'

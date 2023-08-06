@@ -1,10 +1,15 @@
 import { useState } from 'react';
-// import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
+import { CREATE_CHARACTER_MUTATION } from '../utils/mutations';
+
 
 function CharacterCreate() {
-  // const history = useHistory();
+  const navigate = useNavigate();
   const [name, setName] = useState('');
   const [selectedClass, setSelectedClass] = useState('');
+
+  const [createCharacter, { loading, error }] = useMutation(CREATE_CHARACTER_MUTATION);
 
   const handleNameChange = (event) => {
     setName(event.target.value);
@@ -14,20 +19,37 @@ function CharacterCreate() {
     setSelectedClass(event.target.value);
   };
 
-  const handleCreateCharacter = () => {
-    // history.push('/introduction');
-  };
+const handleCreateCharacter = async () => {
+  try {
+    
+    const userId = JSON.parse(localStorage.getItem('DD_session')).user._id;
+
+    const { data } = await createCharacter({
+      variables: {
+        user: userId,
+        name: name,
+        class: selectedClass
+      },
+    });
+
+    if (data) {
+      navigate('/introduction');
+    }
+  } catch (err) {
+    console.error('Error creating character:', err);
+  }
+};
 
   return (
-    <div>
+    <div className='stack'>
       <h2>Create Your Character</h2>
-      <div>
+      <div className='stack'>
         <label htmlFor="name">Adventurer Name:</label>
-        <input type="text" id="name" value={name} onChange={handleNameChange} />
+        <input type="text" name="name" id="name" value={name} onChange={handleNameChange} />
       </div>
-      <div>
+      <div className='stack'>
         <label htmlFor="class">Class:</label>
-        <select id="class" value={selectedClass} onChange={handleClassChange}>
+        <select id="class" value={selectedClass} name="selectedClass" onChange={handleClassChange}>
           <option value="">Select a Class</option>
           <option value="Fighter">Fighter</option>
           <option value="Wizard">Wizard</option>
