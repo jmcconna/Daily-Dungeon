@@ -1,16 +1,34 @@
-import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
+import { ApolloProvider, ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home.jsx';
 import CharacterCreate from './pages/CharacterCreate.jsx';
 import Introduction from './pages/Introduction.jsx';
 import GameLayout from './pages/GameLayout.jsx';
+import { Combat } from './pages/Combat/App/Combat.jsx'
 import PageNotFound from './pages/404.jsx';
 import './assets/css/gameboard.css';
+import { setContext } from '@apollo/client/link/context';
+
+const httpLink = createHttpLink({
+  uri: 'https://fathomless-brook-62747-69ac2fbd8802.herokuapp.com/graphql', // deploy with this
+  // uri: 'http://localhost:3002/graphql', // test locally with this
+});
 
 
-// Create an Apollo Client instance
+const authLink = setContext((_, { headers }) => {
+  
+  const token = localStorage.getItem('JWT');
+ 
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : '',
+    },
+  };
+});
+
 const client = new ApolloClient({
-  uri: 'http://your-graphql-api-endpoint',
+  link: authLink.concat(httpLink), 
   cache: new InMemoryCache(),
 });
 
@@ -23,6 +41,7 @@ function App() {
         <Route exact path="/charactercreate" element={<CharacterCreate />} />
         <Route exact path="/introduction" element={<Introduction />} />
         <Route exact path='/gameplay' element={<GameLayout />} />
+        <Route exact path='/combat' element={<Combat />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       </Router>
@@ -30,5 +49,4 @@ function App() {
   );
 }
 
-//<Route exact path="/gameplay" element={<Gameplay />} />
 export default App;

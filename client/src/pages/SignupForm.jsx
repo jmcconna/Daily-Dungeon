@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { CREATE_USER_MUTATION } from '../utils/mutations';
+import { useNavigate } from 'react-router-dom';
 
 const SignUpForm = ({ onClose }) => {
   const [username, setUsername] = useState('');
@@ -9,13 +10,19 @@ const SignUpForm = ({ onClose }) => {
   const [password, setPassword] = useState('');
 
   const [createUser, { loading, error }] = useMutation(CREATE_USER_MUTATION);
-
+  const navigate = useNavigate();
   const handleSignUp = async (e) => {
     e.preventDefault();
 
     try {
-      const { data } = await createUser({ variables: { username, email, password } });
+      const { data } = await createUser({
+        variables: { username, email, password },
+      });
       console.log('New user created:', data.createUser);
+      // token / user passed back
+      const DD_session = data.createUser
+      localStorage.setItem('DD_session', JSON.stringify(DD_session))
+      navigate('/charactercreate');
     } catch (error) {
       console.error('Error creating user:', error.message);
     }
@@ -28,25 +35,45 @@ const SignUpForm = ({ onClose }) => {
   return (
     <div>
       <h2>Sign Up</h2>
-      <form onSubmit={handleSignUp} className='stack'>
-        <div className='stack'>
+      <form onSubmit={handleSignUp} className="stack">
+        <div className="stack">
           <label htmlFor="username">Username:</label>
-          <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
+          <input
+            type="text"
+            id="username"
+            name="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
         </div>
-        <div className='stack'>
+        <div className="stack">
           <label htmlFor="email">Email:</label>
-          <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </div>
-        <div className='stack'>
+        <div className="stack">
           <label htmlFor="password">Password:</label>
-          <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <input
+            type="password"
+            id="password"
+            name="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </div>
         <button type="submit" disabled={loading} to="/characterselect">
           Sign Up
         </button>
         {error && <p>{error.message}</p>}
       </form>
-      <a href="/" onClick={handleBackClick}>Back</a>
+      <a href="/" onClick={handleBackClick}>
+        Back
+      </a>
     </div>
   );
 };

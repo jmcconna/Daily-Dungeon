@@ -38,7 +38,7 @@ const Home = () => {
         <div className='stack'>
           <button onClick={handleLoginClick}>Login</button>
           <button onClick={handleSignupClick}>Signup</button>
-          <Link to={{ pathname: '/gameplay' }}>
+          <Link to={{ pathname: '/introduction' }}>
             <button>Continue as Guest</button>
           </Link>
           

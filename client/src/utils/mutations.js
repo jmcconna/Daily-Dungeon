@@ -29,40 +29,26 @@ export const LOGOUT_MUTATION = gql`
 export const CREATE_USER_MUTATION = gql`
   mutation createUser($username: String!, $email: String!, $password: String!) {
     createUser(username: $username, email: $email, password: $password) {
-      id
-      username
-      email
-      password
+      token
+      user {
+        _id
+        username
+        email
+      }
     }
   }
 `;
+
 
 // ----- CHARACTER MUTATIONS ----- //
 
 // Create New Character //
 export const CREATE_CHARACTER_MUTATION = gql`
-  mutation CreateCharacter($user: ID!, $class: String!, $baseHealth: Int!, $currentHealth: Int!) {
-    createCharacter(user: $user, class: $class, baseHealth: $baseHealth, currentHealth: $currentHealth) {
-      id
+  mutation CreateCharacter($user: ID!, $name: String!, $class: String!) {
+    createCharacter(user: $user, name: $name, class: $class) {
+      _id
+      name
       class
-      level
-      experience
-      baseHealth
-      currentHealth
-      damage
-      weapon {
-        id
-      }
-      armor {
-        id
-      }
-      inventory {
-        item {
-          id
-        }
-        quantity
-      }
-      gold
     }
   }
 `;
