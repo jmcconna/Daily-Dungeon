@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import HeroImg from '../utils/images/Hero.png';
-
+import { useNavigate } from 'react-router-dom';
 import gameboard from '../utils/gameboards.js';
+
+import MonsterModal from './MonsterModal.jsx'
+
+
 
 // randomly generates the tiles where monsters will spawn
 const randomTile = (matrix) => {
@@ -97,6 +101,18 @@ const GridSystem = () => {
     }));
   };
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (isModalOpen) {
+      const timer = setTimeout(() => {
+        setIsModalOpen(false);
+        navigate('/combat');
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [isModalOpen, navigate]);
+
   // load image on initial render and update matrix
   useEffect(() => {
     setState((prevState) => ({
@@ -174,8 +190,14 @@ const GridSystem = () => {
 
         //! i think this is where we can put in logic to call combat stuff
         if (state.matrix[targetY][targetX] === 3) {
-          alert('A wild monster appeared!');
+          return (
+            setIsModalOpen(true)
+
+          )
+          // alert('A wild monster appeared!');
         }
+
+        
       }
     };
 
@@ -344,6 +366,8 @@ const GridSystem = () => {
         }}>
         Reset
       </button>
+      {isModalOpen && <MonsterModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />}
+
       {/* <canvas
         ref={topCanvasRef}
         width={w}

@@ -1,6 +1,6 @@
 import styles from './styles.module.css';
 import { useEffect, useState } from 'react';
-import { Battle, EndMenu} from 'components';
+// import { Battle, EndMenu} from 'components';
 
 export const Combat = () => {
   const [winner, setWinner] = useState();
@@ -14,7 +14,8 @@ export const Combat = () => {
 
   return (
     <div className={styles.main}>
-      {mode === 'battle' && (
+      <h1>Combat Test</h1>
+      {/* {mode === 'battle' && (
         <Battle
           onGameEnd={winner => {
             setWinner(winner);
@@ -25,7 +26,7 @@ export const Combat = () => {
 
       {mode === 'gameOver' && !!winner && (
         <EndMenu winner={winner} onStartClick={() => setMode('battle')} />
-      )}
+      )} */}
     </div>
   );
 };
