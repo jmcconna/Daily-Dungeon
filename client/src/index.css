@@ -98,3 +98,27 @@ form {
   align-items: center;
 }
 
+
+
+/* MonsterModal */
+
+dialog {
+  background: #3c3c3c;
+  border: 5px solid #b08a5e;
+  border-radius: 10px;
+  width: 300px;
+  padding: 20px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #f1e5b2;
+  font-family: 'Times New Roman', serif;
+  text-align: center;
+}
+
+dialog h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
