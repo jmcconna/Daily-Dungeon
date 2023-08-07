@@ -17,8 +17,7 @@ const SignUpForm = ({ onClose }) => {
 
     try {
       const { data } = await createUser({
-        variables: { username, email, password },
-      });
+        variables: { username, email, password },});
       console.log('New user created:', data.createUser);
       // token / user passed back
       Auth.login(data.createUser);
