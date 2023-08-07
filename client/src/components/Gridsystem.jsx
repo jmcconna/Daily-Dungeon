@@ -3,9 +3,7 @@ import HeroImg from '../utils/images/Hero.png';
 import { useNavigate } from 'react-router-dom';
 import gameboard from '../utils/gameboards.js';
 
-import MonsterModal from './MonsterModal.jsx'
-
-
+import MonsterModal from './MonsterModal.jsx';
 
 // randomly generates the tiles where monsters will spawn
 const randomTile = (matrix) => {
@@ -88,6 +86,8 @@ const GridSystem = () => {
     // }
     getInitialState(gameboard)
   );
+  const [hasWon, setHasWon] = useState(false);
+
   const imageObj = new Image();
   imageObj.src = HeroImg;
 
@@ -170,6 +170,12 @@ const GridSystem = () => {
       ),
     }));
   };
+  const checkWinCondition = (x, y) => {
+    if (x === 7 && y === 28) {
+      // maze exit is 7 28
+      setHasWon(true);
+    }
+  };
 
   const handleKeyDown = ({ keyCode }) => {
     const move = (x, y) => {
@@ -188,16 +194,12 @@ const GridSystem = () => {
         }));
         renderGameBoard();
 
-        //! i think this is where we can put in logic to call combat stuff
-        if (state.matrix[targetY][targetX] === 3) {
-          return (
-            setIsModalOpen(true)
+        checkWinCondition(targetX, targetY);
 
-          )
+        if (state.matrix[targetY][targetX] === 3) {
+          return setIsModalOpen(true);
           // alert('A wild monster appeared!');
         }
-
-        
       }
     };
 
@@ -366,7 +368,26 @@ const GridSystem = () => {
         }}>
         Reset
       </button>
-      {isModalOpen && <MonsterModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />}
+      {isModalOpen && (
+        <MonsterModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          type={1}
+        />
+      )}
+      {hasWon && (
+        <MonsterModal
+          isOpen={hasWon}
+          onClose={() => {
+            setState(getInitialState(gameboard));
+            setHasWon(false);
+            navigate('/introduction');
+            localStorage.removeItem('gameState');
+            localStorage.removeItem('randomTilesGenerated');
+          }}
+          type={2}
+        />
+      )}
 
       {/* <canvas
         ref={topCanvasRef}
