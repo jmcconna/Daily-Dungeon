@@ -4,6 +4,7 @@ import { useMutation } from '@apollo/client';
 import { CREATE_USER_MUTATION } from '../utils/mutations';
 import { useNavigate } from 'react-router-dom';
 import Auth from '../utils/auth';
+import "../assets/css/UserForm.css"
 
 const SignUpForm = ({ onClose }) => {
   const [username, setUsername] = useState('');
@@ -12,15 +13,15 @@ const SignUpForm = ({ onClose }) => {
 
   const [createUser, { loading, error }] = useMutation(CREATE_USER_MUTATION);
   const navigate = useNavigate();
+  
   const handleSignUp = async (e) => {
     e.preventDefault();
     
     try {
       const { data } = await createUser({
         variables: { username, email, password },});
-        console.log(data);
+      
       console.log('New user created:', data.createUser);
-      // token / user passed back
       Auth.login(data.createUser);
       navigate('/charactercreate');
     } catch (error) {
@@ -67,7 +68,7 @@ const SignUpForm = ({ onClose }) => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit" disabled={loading} to="/characterselect">
+        <button type="submit" disabled={loading}>
           Sign Up
         </button>
         {error && <p>{error.message}</p>}

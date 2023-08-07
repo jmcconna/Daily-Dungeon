@@ -3,13 +3,13 @@ import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN_MUTATION } from '../utils/mutations';
 import { useNavigate } from 'react-router-dom';
+import '../assets/css/UserForm.css';
 
 const Login = ({ onClose }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loginUser, { loading, error }] = useMutation(LOGIN_MUTATION);
   const navigate = useNavigate();
-
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -17,10 +17,9 @@ const Login = ({ onClose }) => {
       console.log(email, password);
       const { data } = await loginUser({ variables: { email, password } });
       console.log('Logged in user:', data.loginUser);
-      // token / user passed back
-      const DD_session = data.loginUser;
-      console.log(data.loginUser);
-      localStorage.setItem('DD_session', JSON.stringify(DD_session));
+        // token / user passed back
+        const DD_session = data.loginUser
+        localStorage.setItem('DD_session', JSON.stringify(DD_session))
       navigate('/characterselect');
     } catch (error) {
       console.error('Error logging in:', error.message);
@@ -34,8 +33,8 @@ const Login = ({ onClose }) => {
   return (
     <div>
       <h2>Login</h2>
-      <form onSubmit={handleLogin} className="stack">
-        <div className="stack">
+      <form onSubmit={handleLogin} className='stack'>
+        <div className='stack'>
           <label htmlFor="email">Email:</label>
           <input
             type="email"
@@ -45,7 +44,7 @@ const Login = ({ onClose }) => {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        <div className="stack">
+        <div className='stack'>
           <label htmlFor="password">Password:</label>
           <input
             type="password"
