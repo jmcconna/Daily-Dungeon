@@ -2,16 +2,11 @@ import { gql } from '@apollo/client';
 
 // ----- USER MUTATIONS ----- //
 
-// Login //
+// Login // //JBM changed username to email for this mutation, removed user
 export const LOGIN_MUTATION = gql`
   mutation loginUser($email: String!, $password: String!) {
     loginUser(email: $email, password: $password) {
       token
-      user {
-        id
-        email
-        password
-      }
     }
   }
 `;
@@ -25,16 +20,11 @@ export const LOGOUT_MUTATION = gql`
   }
 `;
 
-// Create User // 
+// Create User // //JBM removing user
 export const CREATE_USER_MUTATION = gql`
   mutation createUser($username: String!, $email: String!, $password: String!) {
     createUser(username: $username, email: $email, password: $password) {
       token
-      user {
-        _id
-        username
-        email
-      }
     }
   }
 `;

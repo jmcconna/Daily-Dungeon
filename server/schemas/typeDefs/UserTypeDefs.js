@@ -7,6 +7,7 @@ const userTypeDefs = gql`
     email: String!
     premiumCurrency: Int
     characters: [Character]
+    password: String
   }
 
   type Auth {

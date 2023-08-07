@@ -11,8 +11,8 @@ import './assets/css/gameboard.css';
 import { setContext } from '@apollo/client/link/context';
 
 const httpLink = createHttpLink({
-  uri: 'https://fathomless-brook-62747-69ac2fbd8802.herokuapp.com/graphql', // deploy with this
-  // uri: 'http://localhost:3002/graphql', // test locally with this
+  //uri: 'https://fathomless-brook-62747-69ac2fbd8802.herokuapp.com/graphql', // deploy with this
+   uri: 'http://localhost:3002/graphql', // test locally with this
 });
 
 
