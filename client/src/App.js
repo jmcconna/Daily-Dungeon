@@ -2,6 +2,7 @@ import { ApolloProvider, ApolloClient, InMemoryCache, createHttpLink } from '@ap
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home.jsx';
 import CharacterCreate from './pages/CharacterCreate.jsx';
+import CharacterSelect from './pages/CharacterSelect.jsx';
 import Introduction from './pages/Introduction.jsx';
 import GameLayout from './pages/GameLayout.jsx';
 import { Combat } from './pages/Combat/App/Combat.jsx'
@@ -39,6 +40,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/charactercreate" element={<CharacterCreate />} />
+        <Route exact path="/characterselect" element={<CharacterSelect />} />
         <Route exact path="/introduction" element={<Introduction />} />
         <Route exact path='/gameplay' element={<GameLayout />} />
         <Route exact path='/combat' element={<Combat />} />
