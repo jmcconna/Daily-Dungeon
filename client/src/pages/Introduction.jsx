@@ -28,7 +28,7 @@ function Introduction() {
     } else if (displayedText.length < texts[displayedTextIndex].length) {
       setTimeout(() => {
         setDisplayedText(prevText => prevText + texts[displayedTextIndex][prevText.length]);
-      }, 50); // Adjust the delay here as needed
+      }, 50); // adjust the delay here
     }
   }, [displayedText, displayedTextIndex, texts]);
 
@@ -41,7 +41,7 @@ function Introduction() {
 
   const buttonStyle = {
     position: 'fixed',
-    bottom: '30%', // Adjust the value to your preference
+    bottom: '30%', // might need to be changed
     left: '50%',
     transform: 'translateX(-50%)',
     display: displayedTextIndex === texts.length - 1 && displayedText.length === texts[displayedTextIndex].length
