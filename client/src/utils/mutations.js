@@ -49,9 +49,39 @@ export const CREATE_CHARACTER_MUTATION = gql`
       _id
       name
       class
+      level
+      experience
+      baseHealth
+      currentHealth
+      basePhysicalAttack
+      baseMagicalAttack
+      skills {
+        name
+        type
+        damage
+      }
+      weapon {
+        _id
+        name
+      }
+      armor {
+        _id
+        name
+      }
+      inventory {
+        item {
+          _id
+          name
+        }
+        quantity
+        level
+      }
+      gold
+      gameboardState
     }
   }
 `;
+
 
 // Update Character //
 export const UPDATE_CHARACTER_MUTATION = gql`
@@ -65,13 +95,6 @@ export const UPDATE_CHARACTER_MUTATION = gql`
       currentHealth
       damage
       gold
-      gameboardState
-      weapon {
-        id
-      }
-      armor {
-        id
-      }
       inventory {
         item {
           id

@@ -1,26 +1,28 @@
-export const wait = ms =>
+const wait = ms =>
   new Promise(resolve => {
     setTimeout(() => {
       resolve();
     }, ms);
   });
 
-export const attack = ({ attacker, receiver }) => {
+const attack = ({ attacker, receiver }) => {
   const receivedDamage =
     attacker.attack - (attacker.level - receiver.level) * 1.25;
 
   const finalDamage = receivedDamage - receiver.defense / 2;
 
-  return finalDamage;
+  return finalDamage*3;
 };
-export const magic = ({ attacker, receiver }) => {
+const magic = ({ attacker, receiver }) => {
   const receivedDamage =
     attacker.magic - (attacker.level - receiver.level) * 1.25;
 
   const finalDamage = receivedDamage - receiver.magicDefense / 2;
 
-  return finalDamage;
+  return finalDamage*3;
 };
-export const heal = ({ receiver }) => {
-  return receiver.magic + receiver.level * 0.25;
+const heal = ({ receiver }) => {
+  return receiver.magic + receiver.level * 0.1;
 };
+
+export { wait, attack, magic, heal}

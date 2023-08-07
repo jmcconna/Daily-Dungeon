@@ -1,11 +1,13 @@
 import styles from './styles.module.css';
 import { useEffect, useState } from 'react';
-import { useAIOpponent, useBattleSequence } from 'hooks';
-import { opponentStats, playerStats, wait } from 'shared';
-import { BattleMenu, PlayerSummary, BattleAnnouncer } from 'components';
+import { useAIOpponent, useBattleSequence } from '../../hooks/index.js';
+import { opponentStats, playerStats, wait } from '../../shared/index.js';
+import { BattleMenu, PlayerSummary, BattleAnnouncer } from '../index.js';
 
-export const Battle = ({ onGameEnd }) => {
+const Battle = ({ onGameEnd, character }) => {
   const [sequence, setSequence] = useState({});
+
+  
 
   const {
     turn,
@@ -29,7 +31,7 @@ export const Battle = ({ onGameEnd }) => {
     if (playerHealth === 0 || opponentHealth === 0) {
       (async () => {
         await wait(1000);
-        onGameEnd(playerHealth === 0 ? opponentStats : playerStats);
+        onGameEnd(playerHealth === 0 ? opponentStats : character);
       })();
     }
   }, [playerHealth, opponentHealth, onGameEnd]);
@@ -75,9 +77,9 @@ export const Battle = ({ onGameEnd }) => {
           <PlayerSummary
             main={true}
             health={playerHealth}
-            name={playerStats.name}
-            level={playerStats.level}
-            maxHealth={playerStats.maxHealth}
+            name={character.name}
+            level={character.level}
+            maxHealth={character.baseHealth}
           />
         </div>
 
@@ -85,7 +87,7 @@ export const Battle = ({ onGameEnd }) => {
           <div className={styles.hudChild}>
             <BattleAnnouncer
               message={
-                announcerMessage || `What will ${playerStats.name} do?`
+                announcerMessage || `What will ${character.name} do?`
               }
             />
           </div>
@@ -103,3 +105,5 @@ export const Battle = ({ onGameEnd }) => {
     </>
   );
 };
+
+export default Battle;

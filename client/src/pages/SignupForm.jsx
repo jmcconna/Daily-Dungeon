@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { CREATE_USER_MUTATION } from '../utils/mutations';
 import { useNavigate } from 'react-router-dom';
+import Auth from '../utils/auth';
 
 const SignUpForm = ({ onClose }) => {
   const [username, setUsername] = useState('');
@@ -20,8 +21,7 @@ const SignUpForm = ({ onClose }) => {
       });
       console.log('New user created:', data.createUser);
       // token / user passed back
-      const DD_session = data.createUser
-      localStorage.setItem('DD_session', JSON.stringify(DD_session))
+      Auth.login(data.createUser);
       navigate('/charactercreate');
     } catch (error) {
       console.error('Error creating user:', error.message);

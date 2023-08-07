@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
-function MonsterModal({ isOpen, onClose }) {
+function MonsterModal({ isOpen, onClose, type }) {
   const navigate = useNavigate();
 
   // useEffect(() => {
@@ -18,11 +18,29 @@ function MonsterModal({ isOpen, onClose }) {
 
   return (
     <dialog open={isOpen}>
-      <h1>You've found a monster!</h1>
-        <p>Prepare for battle!</p>
-        <button onClick={onClose}>Close</button>
+      {(() => {
+        switch(type) {
+          case 1: 
+            return (
+              <>
+                <h1>You've found a monster!</h1>
+                <p>Prepare for battle!</p>
+              </>
+            );
+          case 2:
+            return (
+              <>
+                <p>You made it to the end, amazing!</p>
+                <button onClick={onClose}>Head back home</button>
+              </>
+            );
+          default: 
+            return null;
+        }
+      })()}
     </dialog>
   );
+
 }
 
 export default MonsterModal;

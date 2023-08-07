@@ -1,10 +1,10 @@
-import { Bar } from 'components';
+import { Bar } from '../index.js';
 import styles from './styles.module.css';
 
 const red = '#821400';
 const blue = '#1953cb';
 
-export const PlayerSummary = ({
+const PlayerSummary = ({
   main,
   name,
   level,
@@ -25,3 +25,5 @@ export const PlayerSummary = ({
     </div>
   </div>
 );
+
+export default PlayerSummary;

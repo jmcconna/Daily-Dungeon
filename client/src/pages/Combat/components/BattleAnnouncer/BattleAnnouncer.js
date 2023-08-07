@@ -1,7 +1,7 @@
-import { useTypedMessage } from 'hooks';
+import { useTypedMessage } from '../../hooks/index.js';
 import styles from './styles.module.css';
 
-export const BattleAnnouncer = ({ message }) => {
+const BattleAnnouncer = ({ message }) => {
   const typedMessage = useTypedMessage(message);
 
   return (
@@ -10,3 +10,5 @@ export const BattleAnnouncer = ({ message }) => {
     </div>
   );
 };
+
+export default BattleAnnouncer;

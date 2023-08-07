@@ -1,10 +1,12 @@
 import styles from './styles.module.css';
 import { useEffect, useState } from 'react';
-// import { Battle, EndMenu} from 'components';
+import { Battle, EndMenu} from '../components/index.js';
 
-export const Combat = () => {
+const Combat = () => {
   const [winner, setWinner] = useState();
   const [mode, setMode] = useState('battle');
+
+  const character = JSON.parse(localStorage.getItem('DD_session')).character;
 
   useEffect(() => {
     if (mode === 'battle') {
@@ -14,19 +16,20 @@ export const Combat = () => {
 
   return (
     <div className={styles.main}>
-      <h1>Combat Test</h1>
-      {/* {mode === 'battle' && (
+      {mode === 'battle' && (
         <Battle
           onGameEnd={winner => {
             setWinner(winner);
             setMode('gameOver');
-          }}
+          }} character={character}
         />
       )}
 
       {mode === 'gameOver' && !!winner && (
-        <EndMenu winner={winner} onStartClick={() => setMode('battle')} />
-      )} */}
+        <EndMenu winner={winner} character={character} />
+      )}
     </div>
   );
 };
+
+export default Combat;

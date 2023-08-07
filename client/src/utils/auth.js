@@ -16,18 +16,18 @@ class AuthService {
 
   getToken() {
     // Retrieves the user token from localStorage
-    return localStorage.getItem('id_token');
+    return JSON.parse(localStorage.getItem('DD_session')).token;
   }
 
-  login(idToken) {
-    // Saves user token to localStorage and reloads the application for logged in status to take effect
-    localStorage.setItem('id_token', idToken);
-    window.location.assign('/');
+  login(userInfo) {
+    // Saves user and token to localStorage and reloads the application for logged in status to take effect
+    const DD_session = userInfo;
+    localStorage.setItem('DD_session', JSON.stringify(DD_session));
   }
 
   logout() {
     // Clear user token and profile data from localStorage
-    localStorage.removeItem('id_token');
+    localStorage.removeItem('DD_session');
     // this will reload the page and reset the state of the application
     window.location.reload();
   }

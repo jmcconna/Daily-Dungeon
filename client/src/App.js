@@ -1,10 +1,10 @@
 import { ApolloProvider, ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Combat from './pages/Combat/Combat/Combat.jsx';
 import Home from './pages/Home.jsx';
 import CharacterCreate from './pages/CharacterCreate.jsx';
 import Introduction from './pages/Introduction.jsx';
 import GameLayout from './pages/GameLayout.jsx';
-import { Combat } from './pages/Combat/App/Combat.jsx'
 import PageNotFound from './pages/404.jsx';
 import './assets/css/gameboard.css';
 import { setContext } from '@apollo/client/link/context';
