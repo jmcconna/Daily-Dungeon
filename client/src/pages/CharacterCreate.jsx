@@ -33,6 +33,7 @@ const handleCreateCharacter = async () => {
     });
 
     if (data) {
+      console.log(data);
       navigate('/introduction');
     }
   } catch (err) {

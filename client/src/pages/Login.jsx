@@ -2,18 +2,23 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN_MUTATION } from '../utils/mutations';
+import { useNavigate } from 'react-router-dom';
 
 const Login = ({ onClose }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loginUser, { loading, error }] = useMutation(LOGIN_MUTATION);
-
+  const navigate = useNavigate();
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
       const { data } = await loginUser({ variables: { email, password } });
       console.log('Logged in user:', data.loginUser);
+        // token / user passed back
+        const DD_session = data.loginUser
+        localStorage.setItem('DD_session', JSON.stringify(DD_session))
+      navigate('/charactercreate'); //TODO: change this to characterselect, and fix the create character mutation
     } catch (error) {
       console.error('Error logging in:', error.message);
     }
