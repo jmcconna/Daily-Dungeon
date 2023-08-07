@@ -7,7 +7,8 @@ function Introduction() {
     "I remember when I was your age... eager to prove myself out in the wilds.",
     "But you still have much to learn.",
     "I can teach you what you need to know to survive.",
-    "Just bring me back a portion of what you find, and I'll show you how to hone your skills in battle, navigation, and the arts.",
+    "I'll show you how to hone your skills in battle, navigation, and the arts.",
+    "Find me as quickly as possible, the world is in great peril.",
     "Do not delay. Time is of the essence.\"",
     "Signed, Master Clavicus"
   ], []);
@@ -24,14 +25,14 @@ function Introduction() {
           setDisplayedTextIndex(displayedTextIndex + 1);
           setDisplayedText('');
         }
-      }, 1500);
+      }, 500);
     } else if (displayedText.length < texts[displayedTextIndex].length) {
       setTimeout(() => {
         setDisplayedText(prevText => prevText + texts[displayedTextIndex][prevText.length]);
-      }, 50); // adjust the delay here
+      }, 30);
     }
   }, [displayedText, displayedTextIndex, texts]);
-
+  
   const textStyles = {
     whiteSpace: 'nowrap',
     overflow: 'hidden',
@@ -48,18 +49,33 @@ function Introduction() {
       ? 'block'
       : 'none',
   };
+  // Can't get this to work. Would be cool but, struggling. Not MVP.
+  /*const containerStyle = {
+    backgroundImage: "url('/scroll.avif')",
+    backgroundSize: 'contain',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center', 
+    width: '100%',
+    height: '100%',
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    zIndex: -1,
+  };*/
 
   return (
-    <div className="center stack">
-      <div>
-        {previousTexts.map((text, index) => (
-          <p key={index} style={textStyles}>{text}</p>
-        ))}
+    <div /*style={containerStyle}*/>
+      <div className="center stack">
+        <div>
+          {previousTexts.map((text, index) => (
+            <p key={index} style={textStyles}>{text}</p>
+          ))}
+        </div>
+        <p style={textStyles}>{displayedText}</p>
+        <Link to={{ pathname: '/gameplay' }}>
+          <button style={buttonStyle}>Start Your Adventure</button>
+        </Link>
       </div>
-      <p style={textStyles}>{displayedText}</p>
-      <Link to={{ pathname: '/gameplay' }}>
-        <button style={buttonStyle}>Start Your Adventure</button>
-      </Link>
     </div>
   );
 }
