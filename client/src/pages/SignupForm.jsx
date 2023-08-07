@@ -16,11 +16,11 @@ const SignUpForm = ({ onClose }) => {
   
   const handleSignUp = async (e) => {
     e.preventDefault();
-
+    
     try {
       const { data } = await createUser({
-        variables: { username, email, password },
-      });
+        variables: { username, email, password },});
+      
       console.log('New user created:', data.createUser);
       Auth.login(data.createUser);
       navigate('/charactercreate');
@@ -35,6 +35,7 @@ const SignUpForm = ({ onClose }) => {
 
   return (
     <div>
+
       <h2>Sign Up</h2>
       <form onSubmit={handleSignUp} className="stack">
         <div className="stack">

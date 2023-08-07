@@ -148,6 +148,7 @@ export const GET_CHARACTER_QUERY = gql`
   query GetCharacter($_id: ID!) {
     getCharacter(_id: $_id) {
       id
+      name
       class
       level
       experience
@@ -158,13 +159,16 @@ export const GET_CHARACTER_QUERY = gql`
       gameboardState
       weapon {
         id
+        name
       }
       armor {
         id
+        name
       }
       inventory {
         item {
           id
+          name
         }
         quantity
       }
@@ -174,32 +178,22 @@ export const GET_CHARACTER_QUERY = gql`
 
 // Get Characters By User ID //
 export const GET_CHARACTERS_QUERY = gql`
-  query GetCharacters($user: ID!) {
-    getCharacters(user: $user) {
-      id
+  query GetCharactersByUserId($user: ID!) {
+    getCharactersByUserID(user: $user) {
+      _id
+      name
       class
       level
       experience
       baseHealth
       currentHealth
-      damage
+      basePhysicalAttack
+      baseMagicalAttack
       gold
-      gameboardState
-      weapon {
-        id
-      }
-      armor {
-        id
-      }
-      inventory {
-        item {
-          id
-        }
-        quantity
-      }
     }
   }
 `;
+
 
 // ----- GAMEBOARD QUERIES ----- //
 
