@@ -19,11 +19,16 @@ const characterResolvers = {
         .populate('armor');
     },
     getCharactersByUserID: async (_, { user }) => {
-      return await Character.find({ user })
-        .populate('inventory.item')
-        .populate('weapon')
-        .populate('armor');
-    },
+      try {
+        return await Character.find({ user })
+          // .populate('inventory.item')
+          // .populate('weapon')
+          // .populate('armor');
+      } catch (err) {
+        console.error('Error fetching characters:', err);
+        throw new Error('Failed to fetch characters');
+      }
+    },      
   },
 
   Mutation: {

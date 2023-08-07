@@ -71,6 +71,7 @@ button:focus-visible {
   }
 }
 
+/* Composition Classes  */
 .stack {
   display: flex;
   flex-direction: column;
@@ -85,8 +86,12 @@ button:focus-visible {
   margin-block-start: var(--space, 1.5rem);
 } 
 
-form {
-  inline-size: clamp(20ch, 35ch, 50ch);
+.cluster {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
 }
 
 .center {
@@ -98,7 +103,9 @@ form {
   align-items: center;
 }
 
-
+form {
+  inline-size: clamp(20ch, 35ch, 50ch);
+}
 
 /* MonsterModal */
 
@@ -122,3 +129,32 @@ dialog h1 {
   margin-bottom: 20px;
   font-weight: bold;
 }
+
+/* Character Cards */
+
+.character-card {
+  background: #f5e6d0; 
+  border: 1px solid #8a6d3b;  
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 5px;
+  font-family: 'Times New Roman', Times, serif;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.character-card:hover {
+  transform: scale(1.05); 
+}
+
+.character-card h3 {
+  border-bottom: 1px solid #8a6d3b;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.character-card p {
+  margin: 0.5rem 0;
+}
+
