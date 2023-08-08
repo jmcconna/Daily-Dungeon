@@ -2,19 +2,26 @@
     box-sizing: border-box;
 }
 
+:root {
+    --color1: black;
+    --color2: green;
+    --color3: yellow;
+    --color4: red;
+}
+
 body {
-    background: #ffffff;
+    background: var(--color1);
     padding: 0;
     margin: 0;
     overflow: hidden;
-    color: green;
+    color: var(--color2);
 }
 
 .game-container {
     position: relative;
     width: 176px;
     height: 95px;
-    outline: 1px solid #ffff;
+    outline: 1px solid var(--color3);
     margin: 0 auto;
     margin-top: 20px;
 

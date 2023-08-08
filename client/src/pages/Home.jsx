@@ -1,9 +1,9 @@
-import { useRef, useState } from "react";
-import styled from "styled-components";
-import SignUpForm from "./SignupForm";
-import Login from "./Login";
-import { Link } from "react-router-dom";
-import "../assets/css/style.css";
+import { useState } from 'react';
+import styled from 'styled-components';
+import SignUpForm from './SignupForm';
+import Login from './Login';
+import { Link } from 'react-router-dom';
+import '../assets/css/style.css';
 import background from "../utils/images/dungeon-background.png";
 
 const Container = styled.div`
