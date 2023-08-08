@@ -15,7 +15,6 @@ const randomTile = (matrix) => {
       if (matrix[i][h] === 0) {
         const rando = Math.floor(Math.random() * 100);
         if (rando <= 5) {
-          // changed to 3 to avoid any uunforseen errors using falsy -1
           matrix[i][h] = 3;
         }
       }
@@ -38,12 +37,6 @@ const saveStateToLocalStorage = (state) => {
   localStorage.setItem('gameState', JSON.stringify(savedState));
 };
 
-// const loadStateFromLocalStorage = (setState) => {
-//   const savedState = JSON.parse(localStorage.getItem('gameState'));
-//   if (savedState) {
-//     setState(savedState);
-//   }
-// };
 const getInitialState = (gameboard) => {
   const savedState = JSON.parse(localStorage.getItem('gameState'));
   if (savedState && savedState.player.imageObj) {
@@ -69,21 +62,9 @@ const getInitialState = (gameboard) => {
   }
 };
 const GridSystem = () => {
-  // const { matrix, playerX, playerY } = gameboard;
-  //! const uiCanvasRef = useRef(null);
   const outlineCanvasRef = useRef(null);
-  //! const topCanvasRef = useRef(null);
 
   const [state, setState] = useState(
-    //   {
-    //   matrix: [...matrix],
-    //   player: {
-    //     x: playerX,
-    //     y: playerY,
-    //     color: 'red',
-    //     imageObj: null,
-    //   },
-    // }
     getInitialState(gameboard)
   );
   const [hasWon, setHasWon] = useState(false);
@@ -124,7 +105,6 @@ const GridSystem = () => {
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
-    outlineCanvasRef.current.addEventListener('click', handleClick);
 
     // render gameboard on every state change to show player moving
     renderGameBoard();
@@ -138,22 +118,16 @@ const GridSystem = () => {
   }, [state.matrix, state.player.x, state.player.y, state.player.imageObj]);
 
   const isValidMove = (targetX, targetY, x, y) => {
-    // const targetX = state.player.x + x;
-    // const targetY = state.player.y + y;
-    // const diffX = Math.abs(x); // remove this to restrict diagonal moves
-    // const diffY = Math.abs(y); // same as above
 
     if (
       targetX >= 0 &&
       targetX < state.matrix[0].length &&
       targetY >= 0 &&
       targetY < state.matrix.length &&
-      // added extra condition to see if our guy is running into a monster
       (state.matrix[targetY][targetX] === 0 ||
         state.matrix[targetY][targetX] === 3) &&
-      // diffX <= 1 && // remove this to restrict diagonal moves
-      // diffY <= 1 // same as above
-      ((Math.abs(x) === 1 && y === 0) || (Math.abs(y) === 1 && x === 0)) // add this back in to restrict diagonal moves
+      
+      ((Math.abs(x) === 1 && y === 0) || (Math.abs(y) === 1 && x === 0)) 
     ) {
       return true;
     }
@@ -177,6 +151,54 @@ const GridSystem = () => {
     }
   };
 
+  const handleMobileMove = (direction) => {
+    let x = 0;
+    let y = 0;
+
+    switch (direction) {
+      case 'left':
+        x = -1;
+        break;
+      case 'right':
+        x = 1;
+        break;
+      case 'up':
+        y = -1;
+        break;
+      case 'down':
+        y = 1;
+        break;
+      default:
+        return;
+    }
+
+    const move = (x, y) => {
+      const targetX = state.player.x + x;
+      const targetY = state.player.y + y;
+      if (isValidMove(targetX, targetY, x, y)) {
+        updateMatrix(state.player.y, state.player.x, 0);
+        updateMatrix(state.player.y + y, state.player.x + x, 2);
+        setState((prevState) => ({
+          ...prevState,
+          player: {
+            ...prevState.player,
+            x: prevState.player.x + x,
+            y: prevState.player.y + y,
+          },
+        }));
+        renderGameBoard();
+
+        checkWinCondition(targetX, targetY);
+
+        if (state.matrix[targetY][targetX] === 3) {
+          return setIsModalOpen(true);
+        }
+      }
+    };
+    move(x, y);
+  };
+
+
   const handleKeyDown = ({ keyCode }) => {
     const move = (x, y) => {
       const targetX = state.player.x + x;
@@ -198,7 +220,6 @@ const GridSystem = () => {
 
         if (state.matrix[targetY][targetX] === 3) {
           return setIsModalOpen(true);
-          // alert('A wild monster appeared!');
         }
       }
     };
@@ -221,37 +242,6 @@ const GridSystem = () => {
     }
   };
 
-  const handleClick = (event) => {
-    const cellSize = 40;
-    const padding = 2;
-
-    // Grabs the location of the click and accounts for the border stuff
-    const x = event.clientX;
-    const y = event.clientY;
-
-    // Takes the click location and figures out exactly which cell it is
-    const col = Math.floor(x / (cellSize + padding));
-    const row = Math.floor(y / (cellSize + padding));
-
-    // Determines how far the user wants to move and then checks to make sure it's a valid move before sending to the move function
-    const diffX = col - state.player.x;
-    const diffY = row - state.player.y;
-
-    if (isValidMove(diffX, diffY)) {
-      updateMatrix(state.player.y, state.player.x, 0);
-      updateMatrix(row, col, 2);
-      setState((prevState) => ({
-        ...prevState,
-        player: {
-          ...prevState.player,
-          x: col,
-          y: row,
-        },
-      }));
-      renderGameBoard();
-    }
-  };
-
   const getCenter = (w, h) => {
     return {
       x: window.innerWidth / 2 - w / 2,
@@ -262,39 +252,27 @@ const GridSystem = () => {
   const renderGameBoard = () => {
     if (
       !outlineCanvasRef.current ||
-      // !uiCanvasRef.current ||
-      // !topCanvasRef.current ||
       !state.player.imageObj
     ) {
-      return; // makes sure image and canvas are ready before rendering
+      return;
     }
 
-    const cellSize = 20; // Modify as needed
-    const padding = 2; // Modify as needed
-
-    // Determine the height and width of the whole gameboard
-    const w = (cellSize + padding) * state.matrix[0].length - padding;
-    const h = (cellSize + padding) * state.matrix.length - padding;
-
-    // Retrieve the context from the outlineCanvasRef
+    const isMobile = window.innerWidth <= 768;
+    const cellSize = isMobile ? 13 : 20; 
+    const padding = 2; 
+    
     const outlineContext = outlineCanvasRef.current.getContext('2d');
     outlineContext.canvas.width = w;
     outlineContext.canvas.height = h;
 
-    // Similar to above stuff, figures out where the center of the canvas is
-    const center = getCenter(w, h); // Assume getCenter is defined elsewhere
+    const center = getCenter(w, h); 
     outlineCanvasRef.current.style.marginLeft = center.x;
     outlineCanvasRef.current.style.marginTop = center.y;
 
-    // // Adjust topContext as needed (retrieve from ref)
-    //! topCanvasRef.current.style.marginLeft = center.x;
-    //! topCanvasRef.current.style.marginTop = center.y;
-
-    // Loops through every cell in the matrix
     for (let row = 0; row < state.matrix.length; row++) {
       for (let col = 0; col < state.matrix[row].length; col++) {
         const cellVal = state.matrix[row][col];
-        let color; //
+        let color; 
 
         if (cellVal === 1) {
           color = '#0038c7';
@@ -327,47 +305,38 @@ const GridSystem = () => {
         }
       }
     }
-
-    // // Retrieve the context from the uiCanvasRef and update UI as needed
-    //! const uiContext = uiCanvasRef.current.getContext('2d');
-    //! uiContext.font = '20px Courier';
-    //! uiContext.fillStyle = 'white';
-    //! uiContext.fillText('Grid Based System', 20, 30);
   };
 
-  const cellSize = 30;
+  const isMobile = window.innerWidth <= 768;
+  const cellSize = isMobile ? 13 : 20; 
   const padding = 2;
 
-  const w = (cellSize + padding) * gameboard.matrix[0].length - padding;
-  const h = (cellSize + padding) * gameboard.matrix.length - padding;
+
+  const w = isMobile
+    ? (cellSize + padding) * gameboard.matrix[0].length - padding
+    : (cellSize + padding) * gameboard.matrix[0].length - padding;
+  const h = isMobile
+    ? (cellSize + padding) * gameboard.matrix.length - padding
+    : (cellSize + padding) * gameboard.matrix.length - padding;
 
   const center = getCenter(w, h);
 
   return (
-    <div>
-      {/* <canvas
-        ref={uiCanvasRef}
-        width={420}
-        height={580}
-        style={{ ...center, background: '#000' }}
-      /> */}
-
+    <div className='center'>
       <canvas
         ref={outlineCanvasRef}
         width={w}
         height={h}
         style={{ ...center, background: '#444' }}
       />
-      <br />
-      <button
-        onClick={() => {
-          localStorage.removeItem('gameState');
-          localStorage.removeItem('randomTilesGenerated');
-          setState(getInitialState(gameboard));
-          window.location.reload();
-        }}>
-        Reset
-      </button>
+
+        <div className="mobile-controls">
+          <button onClick={() => handleMobileMove('up')}>Up</button>
+          <button onClick={() => handleMobileMove('left')}>Left</button>
+          <button onClick={() => handleMobileMove('down')}>Down</button>
+          <button onClick={() => handleMobileMove('right')}>Right</button>
+        </div>
+      
       {isModalOpen && (
         <MonsterModal
           isOpen={isModalOpen}
@@ -388,17 +357,6 @@ const GridSystem = () => {
           type={2}
         />
       )}
-
-      {/* <canvas
-        ref={topCanvasRef}
-        width={w}
-        height={h}
-        style={{
-          ...center,
-          background: '#111',
-          backgroundColor: 'transparent',
-        }}
-      /> */}
     </div>
   );
 };

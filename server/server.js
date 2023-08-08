@@ -32,9 +32,9 @@ const startApolloServer = async () => {
   await server.start();
   server.applyMiddleware({ app });
 
-  app.use((req, res, next) => {
-    res.status(404).send('Page not found');
-  });
+  // app.use((req, res, next) => {
+  //   res.status(404).send('Page not found');
+  // });
 
   db.once('open', () => {
     app.listen(PORT, () => {
