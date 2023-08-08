@@ -2,18 +2,17 @@
   background: linear-gradient(
     90deg,
     rgb(64, 163, 19) 0%,
-    rgba(255, 255, 255, 1) 50%,
-    rgba(255, 255, 255, 1) 50%,
+    rgb(250, 239, 174) 50%,
+    rgb(250, 239, 174) 50%,
     rgb(245, 49, 49) 100%
   );
 
- /*  background-image: url("/client/public/Assets/Images/Fighter.png"); */
 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   width: 100vw;
-  /* height: 100%; */
+  height: 100%;
   display: flex;
   align-items: center;
   flex-direction: column;

@@ -4,7 +4,7 @@ const playerStats = {
   level: 1,
   maxHealth: 177,
   name: 'Knight',
-  img: '/Assets/Images/Fighter.png',
+  img: '/assets/Images/Fighter.png',
 
   magic: 32,
   attack: 50,
@@ -12,10 +12,10 @@ const playerStats = {
   magicDefense: 30,
 };
 const opponentStats = {
-  level: 1,
+  level: 2,
   name: 'Golem',
   maxHealth: 188,
-  img: '/Assets/Images/Golem.png',
+  img: '/assets/Images/Golem.png',
 
   magic: 50,
   attack: 32,
