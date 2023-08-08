@@ -4,7 +4,9 @@ const playerStats = {
   level: 1,
   maxHealth: 177,
   name: 'Knight',
+
   img: './assets/Images/Fighter.png',
+
 
   magic: 32,
   attack: 50,
