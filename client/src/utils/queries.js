@@ -191,7 +191,6 @@ export const GET_CHARACTERS_QUERY = gql`
     getCharactersByUserID(user: $user) {
       _id
       name
-      user
       class
       level
       experience

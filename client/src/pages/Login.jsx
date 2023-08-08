@@ -31,8 +31,14 @@ const Login = ({ onClose }) => {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
+    <div
+      style={{
+        color: 'yellow',
+        backgroundColor: 'rgba(255, 255, 255, 0.3)',
+        borderRadius: '10px',
+        padding: '1em',
+      }}>
+      <h2 className='center'>Login</h2>
       <form onSubmit={handleLogin} className='stack'>
         <div className='stack'>
           <label htmlFor="email">Email:</label>
@@ -42,6 +48,7 @@ const Login = ({ onClose }) => {
             name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            style={{ border: '1px solid red', borderRadius: '5px' }}
           />
         </div>
         <div className='stack'>
@@ -52,14 +59,15 @@ const Login = ({ onClose }) => {
             name="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            style={{ border: '1px solid red', borderRadius: '5px' }}
           />
         </div>
-        <button type="submit" disabled={loading} >
+        <button type="submit" disabled={loading}>
           Login
         </button>
         {error && <p>{error.message}</p>}
       </form>
-      <a href="/" onClick={handleBackClick}>
+      <a href="/" onClick={handleBackClick} style={{ color: 'yellow' }}>
         Back
       </a>
     </div>

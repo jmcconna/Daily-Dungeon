@@ -47,10 +47,10 @@ function Introduction() {
   }, [displayedText, displayedTextIndex, texts]);
   
   const textStyles = {
-    whiteSpace: 'nowrap',
+    // whiteSpace: 'nowrap',
     overflow: 'hidden',
 
-    //textAlign: 'center',
+    textAlign: 'center',
 
     color: 'white',
     textStyles: 'bold',
@@ -59,10 +59,11 @@ function Introduction() {
 
   const buttonStyle = {
     position: 'fixed',
-    bottom: '30%', // might need to be changed
+    bottom: '5%', // might need to be changed
     left: '50%',
     transform: 'translateX(-50%)',
-    color: 'white'
+    alignSelf: 'end',
+    backgroundColor: 'darkred',
   };
   // Can't get this to work. Would be cool but, struggling. Not MVP.
   /*const containerStyle = {
@@ -77,14 +78,23 @@ function Introduction() {
     left: 0,
     zIndex: -1,
   };*/
+  const stackStyle = {
+    // display: 'flex',
+    // flexDirection: 'column',
+    // alignItems: 'space-center', 
+    // height: '100%', 
+    padding: '1em',
+    maxInlineSize: '100ch'
+};
 
   return (
     <div class="bkground" style={{ backgroundImage: `url(${forest})`,
-    //width: windowSize.current[0],
-    //height: windowSize.current[1],
-    resizeMode: 'stretch'}}>
-      <div className="center stack">
-        <div>
+    width: windowSize.current[0],
+    height: windowSize.current[1],
+    // resizeMode: 'stretch'
+    }}>
+      <div className="stack center_custom" style={stackStyle}>
+        <div style={{ maxInlineSize: '200ch'}}>
           {previousTexts.map((text, index) => (
             <p key={index} style={textStyles}>{text}</p>
           ))}

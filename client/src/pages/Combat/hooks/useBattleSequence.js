@@ -8,14 +8,13 @@ import {
 } from '../shared/index.js';
 import { useEffect, useState } from 'react';
 
-export const useBattleSequence = sequence => {
+export const useBattleSequence = (sequence) => {
   const [turn, setTurn] = useState(0);
   const [inSequence, setInSequence] = useState(false);
 
   const [playerHealth, setPlayerHealth] = useState(playerStats.maxHealth);
-  const [opponentHealth, setOpponentHealth] = useState(
-    opponentStats.maxHealth,
-  );
+  const [opponentHealth, setOpponentHealth] = useState(opponentStats.maxHealth);
+  const character = JSON.parse(localStorage.getItem('DD_session'))?.character;
 
   const [announcerMessage, setAnnouncerMessage] = useState('');
 
@@ -35,7 +34,7 @@ export const useBattleSequence = sequence => {
 
           (async () => {
             setInSequence(true);
-            setAnnouncerMessage(`${attacker.name} has chosen to attack!`);
+            setAnnouncerMessage(`${character.name} has chosen to attack!`);
             await wait(1000);
 
             turn === 0
@@ -58,8 +57,8 @@ export const useBattleSequence = sequence => {
               : setPlayerAnimation('static');
             setAnnouncerMessage(`${receiver.name} felt that!`);
             turn === 0
-              ? setOpponentHealth(h => (h - damage > 0 ? h - damage : 0))
-              : setPlayerHealth(h => (h - damage > 0 ? h - damage : 0)); // We don't want a negative HP.
+              ? setOpponentHealth((h) => (h - damage > 0 ? h - damage : 0))
+              : setPlayerHealth((h) => (h - damage > 0 ? h - damage : 0)); // We don't want a negative HP.
             await wait(2000);
 
             setAnnouncerMessage(`Now it's ${receiver.name} turn!`);
@@ -98,12 +97,10 @@ export const useBattleSequence = sequence => {
             turn === 0
               ? setOpponentAnimation('static')
               : setPlayerAnimation('static');
-            setAnnouncerMessage(
-              `${receiver.name} doesn't know what hit them!`,
-            );
+            setAnnouncerMessage(`${receiver.name} doesn't know what hit them!`);
             turn === 0
-              ? setOpponentHealth(h => (h - damage > 0 ? h - damage : 0))
-              : setPlayerHealth(h => (h - damage > 0 ? h - damage : 0)); // We don't want a negative HP.
+              ? setOpponentHealth((h) => (h - damage > 0 ? h - damage : 0))
+              : setPlayerHealth((h) => (h - damage > 0 ? h - damage : 0)); // We don't want a negative HP.
             await wait(2500);
 
             setAnnouncerMessage(`Now it's ${receiver.name}'s turn!`);
@@ -136,15 +133,15 @@ export const useBattleSequence = sequence => {
 
             setAnnouncerMessage(`${attacker.name} has recovered health.`);
             turn === 0
-              ? setPlayerHealth(h =>
+              ? setPlayerHealth((h) =>
                   h + recovered <= attacker.maxHealth
                     ? h + recovered
-                    : attacker.maxHealth,
+                    : attacker.maxHealth
                 )
-              : setOpponentHealth(h =>
+              : setOpponentHealth((h) =>
                   h + recovered <= attacker.maxHealth
                     ? h + recovered
-                    : attacker.maxHealth,
+                    : attacker.maxHealth
                 ); // We don't want to set HP more than the max
             await wait(2500);
 
