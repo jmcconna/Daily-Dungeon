@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import SignUpForm from './SignupForm';
 import Login from './Login';
 import { Link } from 'react-router-dom';
-import '../assets/css/style.css';
+
+
 
 const Container = styled.div`
   display: flex;
