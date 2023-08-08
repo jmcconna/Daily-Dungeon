@@ -28,29 +28,31 @@ const itemSeeds = [
   {
     name: 'Scale Mail',
     type: 'armor',
-    description: 'A heavy armor providing excellent protection.',
+    description: 'Heavy armor providing excellent protection.',
     armor: 10,
     price: 150,
   },
   {
     name: 'Leather Cloak',
     type: 'armor',
-    description: 'A cloak that blends with the shadows, enhancing stealth.',
+    description: 'A cloak that blends in with nature, providing minor camoflage.',
     armor: 5,
     price: 150,
   },
   {
     name: 'Linen Robes',
     type: 'armor',
-    description: 'A robe enhancing magical defense and wisdom.',
+    description: 'Basic robes enchanted to enhance magical defenses.',
     armor: 7,
     price: 150,
   },
+
   // Advanced Weapons
+
   {
     name: 'Greataxe of the Ancients',
     type: 'weapon',
-    description: 'A massive battle axe that fills you with the heroism of your ancestors.',
+    description: 'An unnaturaly sharp battle axe that fills you with the heroism of your ancestors.',
     physicalAttackBuff: 20,
     price: 400,
   },
@@ -65,7 +67,7 @@ const itemSeeds = [
   {
     name: 'Longbow of the West Wind',
     type: 'weapon',
-    description: 'A mastercrafted longbow, channeling the force of raw wind.',
+    description: 'A masterfully crafted longbow, channeling the force of raw wind.',
     physicalAttackBuff: 10,
     magicalAttackBuff: 10,
     price: 400,
@@ -73,10 +75,11 @@ const itemSeeds = [
   {
     name: 'Greatstaff of Arcane Power',
     type: 'weapon',
-    description: 'A scepter overflowing with raw arcane energy.',
+    description: 'A scepter overflowing with pure arcane energy.',
     magicalAttackBuff: 20,
     price: 400,
   },
+
   // Advanced Armors
   {
     name: 'Plate of the Holy Guardian',
@@ -96,12 +99,13 @@ const itemSeeds = [
     name: 'Robes of Greater Enlightenment',
     type: 'armor',
     description:
-      'A robe imbued with ancient wisdom, amplifying magical defense.',
+      'A robe imbued with ancient wisdom, amplifying magical and physical defense.',
     armor: 12,
     price: 250,
   },
 
   // Consumables
+  
   {
     name: 'Health Potion',
     type: 'consumable',

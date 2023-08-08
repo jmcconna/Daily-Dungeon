@@ -18,10 +18,8 @@ function Trader() {
   }, []);
 
   const { loading, data } = useQuery(GET_CHARACTER_QUERY, {
-    variables: { id: characterId },
+    variables: { _id: characterId }, // Pass the characterId as a variable
   });
-
-  console.log('data:', data); // console log
 
   const [buyItem] = useMutation(BUY_ITEM_MUTATION, {
     onError: (error) => {
@@ -33,9 +31,7 @@ function Trader() {
   });
 
   const handleBuyItem = async (itemId, price) => {
-    console.log('handleBuyItem data:', data); // console log
-
-    if (data && data.getCharacter && data.getCharacter.gold >= price) {
+    if (data && data.getCharacter.gold >= price) {
       try {
         await buyItem({
           variables: { characterId, itemId },
@@ -51,23 +47,22 @@ function Trader() {
     }
   };
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
+  console.log('Data from useQuery:', data); // Log data
 
-  const { getCharacter: character } = data;
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
+  
+  if (data && data.getCharacter) {
+    const characterData = data.getCharacter;
 
-  console.log('character:', character); // console log
-
-  return (
-    <div>
-      <h2>Trader</h2>
-      {character ? (
+    return (
+      <div>
+        <h2>Trader</h2>
         <div>
-          <p>Your Gold: {character.gold}</p>
+          <p>Your Gold: {characterData.gold}</p>
           <h3>Items for Sale</h3>
           <ul>
-            {character.traderItems.map((item) => (
+            {characterData.traderItems.map((item) => (
               <li key={item.id}>
                 <p>Name: {item.name}</p>
                 <p>Type: {item.type}</p>
@@ -79,10 +74,10 @@ function Trader() {
           </ul>
           {error && <p style={{ color: 'red' }}>{error}</p>}
         </div>
-      ) : null}
-      <Link to="/tavern">Back to Tavern</Link>
-    </div>
-  );
+        <Link to="/tavern">Back to Tavern</Link>
+      </div>
+    );
+  }
 }
 
 export default Trader;
