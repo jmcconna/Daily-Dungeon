@@ -52,7 +52,7 @@ const Battle = ({ onGameEnd, character }) => {
 
       <div className={styles.characters}>
         <div className={styles.gameHeader}>
-          {playerStats.name} vs {opponentStats.name}
+          {character.name} vs {opponentStats.name}
         </div>
         <div className={styles.gameImages}>
           <div className={styles.playerSprite}>

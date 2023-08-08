@@ -258,7 +258,7 @@ const GridSystem = () => {
     }
 
     const isMobile = window.innerWidth <= 768;
-    const cellSize = isMobile ? 13 : 20; 
+    const cellSize = isMobile ? 10 : 20; 
     const padding = 2; 
     
     const outlineContext = outlineCanvasRef.current.getContext('2d');
@@ -275,11 +275,11 @@ const GridSystem = () => {
         let color; 
 
         if (cellVal === 1) {
-          color = '#0038c7';
+          color = 'darkgreen';
         } else if (cellVal == 3) {
-          color = '#edb51a';
+          color = 'darkred';
         } else {
-          color = '#FFFFFF';
+          color = '#D2B48C';
         }
 
         outlineContext.fillStyle = color;
@@ -308,7 +308,7 @@ const GridSystem = () => {
   };
 
   const isMobile = window.innerWidth <= 768;
-  const cellSize = isMobile ? 13 : 20; 
+  const cellSize = isMobile ? 10 : 20; 
   const padding = 2;
 
 
@@ -327,7 +327,7 @@ const GridSystem = () => {
         ref={outlineCanvasRef}
         width={w}
         height={h}
-        style={{ ...center, background: '#444' }}
+        style={{ ...center, background: '#444', border: '3px solid darkred' }}
       />
 
         <div className="mobile-controls">
@@ -350,7 +350,7 @@ const GridSystem = () => {
           onClose={() => {
             setState(getInitialState(gameboard));
             setHasWon(false);
-            navigate('/introduction');
+            navigate('/tavern');
             localStorage.removeItem('gameState');
             localStorage.removeItem('randomTilesGenerated');
           }}

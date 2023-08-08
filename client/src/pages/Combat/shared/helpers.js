@@ -6,6 +6,7 @@ const wait = ms =>
   });
 
 const attack = ({ attacker, receiver }) => {
+  console.log('here', attacker, receiver)
   const receivedDamage =
     attacker.attack - (attacker.level - receiver.level) * 1.25;
 

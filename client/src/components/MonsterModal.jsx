@@ -1,20 +1,4 @@
-import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-
 function MonsterModal({ isOpen, onClose, type }) {
-  const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   if (isOpen) {
-  //     // close the modal after 2 seconds to redirect to combat mode
-  //     const timer = setTimeout(() => {
-  //       onClose();
-  //       navigate('/combat');
-  //     }, 2000);
-
-  //     return () => clearTimeout(timer);
-  //   }
-  // }, [isOpen, onClose, navigate]);
 
   return (
     <dialog open={isOpen}>
