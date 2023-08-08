@@ -1,8 +1,7 @@
 const { User } = require('../../models');
-const jwt = require('jsonwebtoken');
+const { signToken } = require('../../utils/auth');
 const { AuthenticationError } = require('apollo-server-express');
-require('dotenv').config();
-const { JWT_SECRET } = process.env;
+
 
 const userResolvers = {
   Query: {
@@ -28,24 +27,33 @@ const userResolvers = {
           'Incorrect password. Please check and try again.'
         );
       }
-      const token = jwt.sign({ _id: user._id }, JWT_SECRET);
+      console.log(user)
+      const token = signToken(user);
       return { token, user };
     },
 
     createUser: async (_, { username, password, email }) => {
       const user = await User.create({ username, password, email });
-      const token = jwt.sign({ _id: user._id }, JWT_SECRET);
+      const token = signToken(user);
       return { token, user };
     },
 
     updateUser: async (
       _,
-      { _id, username, password, email, premiumCurrency }
+      { _id, username, password, email, premiumCurrency }, { userId }
     ) => {
+
+      if (_id !== userId) {
+        throw new AuthenticationError(
+          'You do not have permission to update this user.'
+        );
+      }
+
       return await User.findByIdAndUpdate(
         _id,
         { username, password, email, premiumCurrency },
-        { new: true }
+        // ensure the password is not returned with the query
+        { new: true, select: '-password'}
       );
     },
   },

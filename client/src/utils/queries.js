@@ -148,6 +148,7 @@ export const GET_CHARACTER_QUERY = gql`
   query GetCharacter($_id: ID!) {
     getCharacter(_id: $_id) {
       id
+      name
       class
       level
       experience
@@ -158,13 +159,16 @@ export const GET_CHARACTER_QUERY = gql`
       gameboardState
       weapon {
         id
+        name
       }
       armor {
         id
+        name
       }
       inventory {
         item {
           id
+          name
         }
         quantity
       }
@@ -174,28 +178,104 @@ export const GET_CHARACTER_QUERY = gql`
 
 // Get Characters By User ID //
 export const GET_CHARACTERS_QUERY = gql`
-  query GetCharacters($user: ID!) {
-    getCharacters(user: $user) {
-      id
+  query GetCharactersByUserId($user: ID!) {
+    getCharactersByUserID(user: $user) {
+      _id
+      name
       class
       level
       experience
       baseHealth
       currentHealth
-      damage
+      basePhysicalAttack
+      baseMagicalAttack
       gold
-      gameboardState
-      weapon {
+    }
+  }
+`;
+
+
+// ----- GAMEBOARD QUERIES ----- //
+
+// Get Gameboard By ID //
+export const GET_GAMEBOARD_QUERY = gql`
+  query GetGameboard($_id: ID!) {
+    getGameboard(_id: $_id) {
+      id
+      name
+      background
+      terrainImages
+      environments {
         id
-      }
-      armor {
-        id
-      }
-      inventory {
-        item {
+        name
+        image
+        description
+        resources {
           id
+          name
+          type
         }
-        quantity
+        monsters {
+          id
+          name
+          baseHealth
+          baseAttack
+        }
+      }
+      monsters {
+        id
+        name
+        image
+        baseHealth
+        baseAttack
+        loot {
+          id
+          name
+          type
+          price
+        }
+      }
+    }
+  }
+`;
+
+// Get All Gameboards //
+export const GET_GAMEBOARDS_QUERY = gql`
+  query GetGameboards {
+    getGameboards {
+      id
+      name
+      background
+      terrainImages
+      environments {
+        id
+        name
+        image
+        description
+        resources {
+          id
+          name
+          type
+        }
+        monsters {
+          id
+          name
+          baseHealth
+          baseAttack
+        }
+      }
+      monsters {
+        id
+        name
+        image
+        baseHealth
+        baseAttack
+        loot {
+          id
+          name
+          type
+          price
+        }
       }
     }
   }

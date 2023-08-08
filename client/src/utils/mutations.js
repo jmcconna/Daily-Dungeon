@@ -2,15 +2,17 @@ import { gql } from '@apollo/client';
 
 // ----- USER MUTATIONS ----- //
 
-// Login //
+// Login // //JBM changed username to email for this mutation, removed user
 export const LOGIN_MUTATION = gql`
-  mutation loginUser($username: String!, $password: String!) {
-    loginUser(username: $username, password: $password) {
+  mutation loginUser($email: String!, $password: String!) {
+    loginUser(email: $email, password: $password) {
       token
       user {
-        id
+        _id
         username
+        email
       }
+      
     }
   }
 `;
@@ -24,46 +26,63 @@ export const LOGOUT_MUTATION = gql`
   }
 `;
 
-// Create User // 
+// Create User // //JBM removing user
 export const CREATE_USER_MUTATION = gql`
   mutation createUser($username: String!, $email: String!, $password: String!) {
     createUser(username: $username, email: $email, password: $password) {
-      id
-      username
-      email
+      token
+      user {
+        _id
+        username
+        email
+      }
     }
   }
 `;
+
 
 // ----- CHARACTER MUTATIONS ----- //
 
 // Create New Character //
 export const CREATE_CHARACTER_MUTATION = gql`
-  mutation CreateCharacter($user: ID!, $class: String!, $baseHealth: Int!, $currentHealth: Int!) {
-    createCharacter(user: $user, class: $class, baseHealth: $baseHealth, currentHealth: $currentHealth) {
-      id
+  mutation CreateCharacter($user: ID!, $name: String!, $class: String!) {
+    createCharacter(user: $user, name: $name, class: $class) {
+      _id
+      name
       class
       level
       experience
       baseHealth
       currentHealth
-      damage
+      basePhysicalAttack
+      baseMagicalAttack
+      skills {
+        name
+        type
+        damage
+      }
       weapon {
-        id
+        _id
+        name
       }
       armor {
-        id
+        _id
+        name
       }
       inventory {
         item {
-          id
+          _id
+          name
         }
         quantity
+        level
       }
       gold
+      gameboardState
     }
   }
 `;
+
 
 // Update Character //
 export const UPDATE_CHARACTER_MUTATION = gql`
@@ -77,13 +96,6 @@ export const UPDATE_CHARACTER_MUTATION = gql`
       currentHealth
       damage
       gold
-      gameboardState
-      weapon {
-        id
-      }
-      armor {
-        id
-      }
       inventory {
         item {
           id
@@ -373,5 +385,76 @@ export const UPDATE_MONSTER_MUTATION = gql`
 export const DELETE_MONSTER_MUTATION = gql`
   mutation DeleteMonster($_id: ID!) {
     deleteMonster(_id: $_id)
+  }
+`;
+
+// ----- GAMEBOARD MUTATIONS ----- //
+
+// Create Gameboard //
+export const CREATE_GAMEBOARD_MUTATION = gql`
+  mutation CreateGameboard(
+    $name: String!
+    $background: String!
+    $terrainImages: [String!]!
+    $environments: [ID!]!
+    $monsters: [ID!]!
+  ) {
+    createGameboard(
+      name: $name
+      background: $background
+      terrainImages: $terrainImages
+      environments: $environments
+      monsters: $monsters
+    ) {
+      id
+      name
+      background
+      terrainImages
+      environments {
+        id
+      }
+      monsters {
+        id
+      }
+    }
+  }
+`;
+
+// Update Gameboard //
+export const UPDATE_GAMEBOARD_MUTATION = gql`
+  mutation UpdateGameboard(
+    $_id: ID!
+    $name: String
+    $background: String
+    $terrainImages: [String!]
+    $environments: [ID!]
+    $monsters: [ID!]
+  ) {
+    updateGameboard(
+      _id: $_id
+      name: $name
+      background: $background
+      terrainImages: $terrainImages
+      environments: $environments
+      monsters: $monsters
+    ) {
+      id
+      name
+      background
+      terrainImages
+      environments {
+        id
+      }
+      monsters {
+        id
+      }
+    }
+  }
+`;
+
+// Delete Gameboard //
+export const DELETE_GAMEBOARD_MUTATION = gql`
+  mutation DeleteGameboard($_id: ID!) {
+    deleteGameboard(_id: $_id)
   }
 `;

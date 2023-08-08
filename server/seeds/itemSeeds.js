@@ -3,35 +3,104 @@ const Item = require('../models/Item');
 const itemSeeds = [
   // Weapons
   {
-    name: 'Sword of Valor',
+    name: 'Longsword',
     type: 'weapon',
-    description: 'A finely crafted sword imbued with magical energy.',
-    damage: 15,
-    price: 200,
+    description: 'A finely crafted sword, foes beware.',
+    physicalAttackBuff: 10,
+    price: 250,
   },
   {
-    name: 'Mystic Bow',
+    name: 'Short Bow',
     type: 'weapon',
-    description: 'An enchanted bow that grants superior aim and power.',
-    damage: 12,
-    range: 50,
+    description: 'An sturdy bow that reliably fires arrows.',
+    physicalAttackBuff: 5,
+    magicalAttackBuff: 5,
+    price: 250,
+  },
+  {
+    name: 'Quarterstaff',
+    type: 'weapon',
+    description: 'A wooden staff charged with arcane power.',
+    magicalAttackBuff: 10,
     price: 250,
   },
   // Armors
   {
-    name: 'Shielded Armor',
+    name: 'Scale Mail',
     type: 'armor',
     description: 'A heavy armor providing excellent protection.',
     armor: 10,
     price: 150,
   },
   {
-    name: 'Cloak of Shadows',
+    name: 'Leather Cloak',
     type: 'armor',
     description: 'A cloak that blends with the shadows, enhancing stealth.',
     armor: 5,
-    price: 180,
+    price: 150,
   },
+  {
+    name: 'Linen Robes',
+    type: 'armor',
+    description: 'A robe enhancing magical defense and wisdom.',
+    armor: 7,
+    price: 150,
+  },
+  // Advanced Weapons
+  {
+    name: 'Greataxe of the Ancients',
+    type: 'weapon',
+    description: 'A massive battle axe that fills you with the heroism of your ancestors.',
+    physicalAttackBuff: 20,
+    price: 400,
+  },
+  {
+    name: 'Everburning Blade',
+    type: 'weapon',
+    description: 'A mighty sword, emitting a flame that can never be extinguished.',
+    physicalAttackBuff: 15,
+    magicalAttackBuff: 5,
+    price: 400,
+  },
+  {
+    name: 'Longbow of the West Wind',
+    type: 'weapon',
+    description: 'A mastercrafted longbow, channeling the force of raw wind.',
+    physicalAttackBuff: 10,
+    magicalAttackBuff: 10,
+    price: 400,
+  },
+  {
+    name: 'Greatstaff of Arcane Power',
+    type: 'weapon',
+    description: 'A scepter overflowing with raw arcane energy.',
+    magicalAttackBuff: 20,
+    price: 400,
+  },
+  // Advanced Armors
+  {
+    name: 'Plate of the Holy Guardian',
+    type: 'armor',
+    description: 'An impenetrable plate armor, guarding against all harm.',
+    armor: 15,
+    price: 250,
+  },
+  {
+    name: 'Cloak of Twilight Illusion',
+    type: 'armor',
+    description: 'A mystical cloak that confounds enemies, increasing evasion.',
+    armor: 8,
+    price: 250,
+  },
+  {
+    name: 'Robes of Greater Enlightenment',
+    type: 'armor',
+    description:
+      'A robe imbued with ancient wisdom, amplifying magical defense.',
+    armor: 12,
+    price: 250,
+  },
+
   // Consumables
   {
     name: 'Health Potion',
@@ -49,9 +118,10 @@ const itemSeeds = [
   {
     name: 'Golden Dragon Amulet',
     type: 'consumable',
-    description: 'A rare and valuable amulet in the shape of a dragon, made of pure gold. Highly sought after by collectors and can be sold for a considerable amount of gold.',
+    description:
+      'A rare and valuable amulet in the shape of a dragon, made of pure gold. Highly sought after by collectors and can be sold for a considerable amount of gold.',
     price: 1000,
-  }
+  },
 ];
 
 const seedItems = async () => {

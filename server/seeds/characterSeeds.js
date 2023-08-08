@@ -3,44 +3,39 @@ const Character = require('../models/Character');
 const characterSeeds = [
   // User 1
   {
-    user: '64caac74133998df2aace5a7',
-    class: 'Paladin',
-    baseHealth: 100,
-    currentHealth: 100,
+    user: '64cd3b8b27b50f610a199652',
+    class: 'Fighter',
+    name: 'Thorgar Ironfist',
   },
   {
-    user: '64caac74133998df2aace5a7',
+    user: '64cd3b8b27b50f610a199652',
     class: 'Ranger',
-    baseHealth: 80,
-    currentHealth: 80,
+    name: 'Elandrial Swiftwind',
   },
   // User 2
   {
-    user: '64caac74133998df2aace5a8',
+    user: '64cd3b8b27b50f610a199653',
     class: 'Ranger',
-    baseHealth: 80,
-    currentHealth: 80,
+    name: 'Faelar Greenleaf',
   },
   {
-    user: '64caac74133998df2aace5a8',
-    class: 'Sorcerer',
-    baseHealth: 70,
-    currentHealth: 70,
+    user: '64cd3b8b27b50f610a199653',
+    class: 'Wizard',
+    name: 'Arius Stormcaller',
   },
   // User 3
   {
-    user: '64caac74133998df2aace5a9',
-    class: 'Paladin',
-    baseHealth: 100,
-    currentHealth: 100,
+    user: '64cd3b8b27b50f610a199654',
+    class: 'Fighter',
+    name: 'Brogan Hammerfall',
   },
   {
-    user: '64caac74133998df2aace5a9',
-    class: 'Sorcerer',
-    baseHealth: 70,
-    currentHealth: 70,
+    user: '64cd3b8b27b50f610a199654',
+    class: 'Wizard',
+    name: 'Seraphina Flameheart',
   },
 ];
+
 
 const seedCharacters = async () => {
   try {

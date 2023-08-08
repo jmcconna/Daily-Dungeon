@@ -19,18 +19,20 @@ const characterResolvers = {
         .populate('armor');
     },
     getCharactersByUserID: async (_, { user }) => {
-      return await Character.find({ user })
-        .populate('inventory.item')
-        .populate('weapon')
-        .populate('armor');
-    },
+      try {
+        return await Character.find({ user })
+          // .populate('inventory.item')
+          // .populate('weapon')
+          // .populate('armor');
+      } catch (err) {
+        console.error('Error fetching characters:', err);
+        throw new Error('Failed to fetch characters');
+      }
+    },      
   },
 
   Mutation: {
-    createCharacter: async (
-      _,
-      { user, class: charClass, baseHealth, currentHealth }
-    ) => {
+    createCharacter: async (_, { user, name, class: charClass }) => {
       const existingUser = await User.findById(user);
       if (!existingUser) {
         throw new UserInputError('Invalid user. Please try again.');
@@ -38,10 +40,8 @@ const characterResolvers = {
 
       const character = await Character.create({
         user,
+        name,
         class: charClass,
-        baseHealth,
-        currentHealth,
-        currentHealth: baseHealth,
       });
 
       return character;
@@ -50,36 +50,74 @@ const characterResolvers = {
       _,
       {
         _id,
+        name,
         class: charClass,
-        level,
         experience,
-        baseHealth,
         currentHealth,
-        damage,
         gold,
         gameboardState,
-      }
+      },
+      { userId }
     ) => {
-      return await Character.findByIdAndUpdate(
-        _id,
-        {
-          class: charClass,
-          level,
-          experience,
-          baseHealth,
-          currentHealth,
-          damage,
-          gold,
-          gameboardState,
-        },
-        { new: true }
-      );
+      const character = await Character.findById(_id);
+
+      if (!character) {
+        throw new UserInputError('Character not found.');
+      }
+
+      if (userId !== character.user.toString()) {
+        throw new AuthenticationError(
+          'You do not have permission to update this character.'
+        );
+      }
+
+      // see if this update contains experience or nah
+      if (experience) {
+        character.experience += experience;
+
+        // ensures that if they get a ton of experience they can level up more than once
+        while (character.levelUp()) {}
+      }
+
+      const updateObject = {
+        name,
+        level: character.level,
+        experience: character.experience,
+        baseHealth: character.baseHealth,
+        basePhysicalAttack: character.basePhysicalAttack,
+        baseMagicalAttack: character.baseMagicalAttack,
+        currentHealth,
+        gold,
+        gameboardState,
+      };
+
+      // have to pull out class here because if it's passed the setter will bug out, but still want to give the option for he user to eventually change their class
+      if (charClass) {
+        updateObject.class = charClass;
+      }
+
+      return await Character.findByIdAndUpdate(_id, updateObject, { new: true })
+        .populate('inventory.item')
+        .populate('weapon')
+        .populate('armor');
     },
-    deleteCharacter: async (_, { _id }) => {
-      const result = await Character.findByIdAndDelete(_id);
+    deleteCharacter: async (_, { _id }, { userId }) => {
+      const character = await Character.findById(_id);
+
+      if (!character) {
+        throw new UserInputError('Character not found.');
+      }
+
+      if (userId !== character.user.toString()) {
+        throw new AuthenticationError(
+          'You do not have permission to delete this character.'
+        );
+      }
+
+      const result = character.remove();
       return !!result;
     },
-    
+
     // Inventory specific mutations
     equipWeapon: async (_, { characterId, itemId }) => {
       const character = await Character.findById(characterId);
@@ -148,8 +186,19 @@ const characterResolvers = {
     },
 
     // handle updates to gameboardState
-    updateGameState: async (_, { characterId, gameState }) => {
-      const character = await Character.findByIdAndUpdate(
+    updateGameState: async (_, { characterId, gameState }, { userId }) => {
+      const character = await Character.findById(characterId);
+
+      if (!character) {
+        throw new UserInputError('Character not found.');
+      }
+
+      if (userId !== character.user.toString()) {
+        throw new AuthenticationError(
+          'You do not have permission to update this state. Go away.'
+        );
+      }
+      await character.update(
         characterId,
         { gameboardState: gameState },
         { new: true, runValidators: true }
