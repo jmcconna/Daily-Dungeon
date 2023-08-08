@@ -6,9 +6,9 @@ import {Link } from 'react-router-dom';
 const GameLayout = () => {
   return (
     <div>
-      <h1>Have fun!</h1>
+      <h1>Adventure</h1>
       <GridSystem />
-      <Link to="/">Go Back Home</Link>
+      <Link to="/">Logout</Link>
     </div>
   );
 };

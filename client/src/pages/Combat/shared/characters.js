@@ -1,4 +1,4 @@
-export const playerStats = {
+const playerStats = {
   level: 44,
   maxHealth: 177,
   name: 'Knight',
@@ -9,7 +9,7 @@ export const playerStats = {
   defense: 30,
   magicDefense: 30,
 };
-export const opponentStats = {
+const opponentStats = {
   level: 44,
   name: 'Golem',
   maxHealth: 188,
@@ -20,3 +20,5 @@ export const opponentStats = {
   defense: 20,
   magicDefense: 48,
 };
+
+export { playerStats, opponentStats };

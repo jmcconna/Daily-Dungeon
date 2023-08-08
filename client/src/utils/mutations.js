@@ -2,16 +2,17 @@ import { gql } from '@apollo/client';
 
 // ----- USER MUTATIONS ----- //
 
-// Login //
+// Login // //JBM changed username to email for this mutation, removed user
 export const LOGIN_MUTATION = gql`
-  mutation loginUser($username: String!, $password: String!) {
-    loginUser(username: $username, password: $password) {
+  mutation loginUser($email: String!, $password: String!) {
+    loginUser(email: $email, password: $password) {
       token
       user {
-        id
+        _id
+        username
         email
-        password
       }
+      
     }
   }
 `;
@@ -25,7 +26,7 @@ export const LOGOUT_MUTATION = gql`
   }
 `;
 
-// Create User // 
+// Create User // //JBM removing user
 export const CREATE_USER_MUTATION = gql`
   mutation createUser($username: String!, $email: String!, $password: String!) {
     createUser(username: $username, email: $email, password: $password) {
@@ -49,9 +50,39 @@ export const CREATE_CHARACTER_MUTATION = gql`
       _id
       name
       class
+      level
+      experience
+      baseHealth
+      currentHealth
+      basePhysicalAttack
+      baseMagicalAttack
+      skills {
+        name
+        type
+        damage
+      }
+      weapon {
+        _id
+        name
+      }
+      armor {
+        _id
+        name
+      }
+      inventory {
+        item {
+          _id
+          name
+        }
+        quantity
+        level
+      }
+      gold
+      gameboardState
     }
   }
 `;
+
 
 // Update Character //
 export const UPDATE_CHARACTER_MUTATION = gql`
@@ -65,13 +96,6 @@ export const UPDATE_CHARACTER_MUTATION = gql`
       currentHealth
       damage
       gold
-      gameboardState
-      weapon {
-        id
-      }
-      armor {
-        id
-      }
       inventory {
         item {
           id

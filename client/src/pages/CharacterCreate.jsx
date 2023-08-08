@@ -33,6 +33,10 @@ const handleCreateCharacter = async () => {
     });
 
     if (data) {
+      const character = data.createCharacter;
+      const DD_session = JSON.parse(localStorage.getItem('DD_session'));
+      DD_session.character = character;
+      localStorage.setItem('DD_session', JSON.stringify(DD_session));
       navigate('/introduction');
     }
   } catch (err) {
@@ -57,6 +61,8 @@ const handleCreateCharacter = async () => {
         </select>
       </div>
       <button onClick={handleCreateCharacter}>Create Character</button>
+  
+      {error && <div>{error.message}</div>}
     </div>
   );
 }

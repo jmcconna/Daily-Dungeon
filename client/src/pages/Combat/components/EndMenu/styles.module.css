@@ -1,0 +1,30 @@
+.main {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.style{
+  color: black; 
+  text-align: center;
+}
+.list{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin-inline: 0;
+}
+.startButton {
+  border: none;
+  outline: none;
+  padding: 15px;
+  font-size: 32px;
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 0px 0px 3px gray;
+  color: black
+}

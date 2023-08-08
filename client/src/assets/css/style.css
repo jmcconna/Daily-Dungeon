@@ -3,10 +3,11 @@
 }
 
 body {
-    background: #333;
+    background: #ffffff;
     padding: 0;
     margin: 0;
     overflow: hidden;
+    color: green;
 }
 
 .game-container {
