@@ -14,10 +14,11 @@ import GameLayout from './pages/GameLayout.jsx';
 import PageNotFound from './pages/404.jsx';
 import './assets/css/gameboard.css';
 import { setContext } from '@apollo/client/link/context';
+import NavBar from './components/NavBar.jsx';
 
 const httpLink = createHttpLink({
   uri: 'https://fathomless-brook-62747-69ac2fbd8802.herokuapp.com/graphql', // deploy with this
-  // uri: 'http://localhost:3002/graphql', // test locally with this
+  //uri: 'http://localhost:3002/graphql', // test locally with this
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -40,6 +41,7 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
+      <NavBar />
       <Router>
         <Routes>
           <Route exact path="/" element={<Home />} />
