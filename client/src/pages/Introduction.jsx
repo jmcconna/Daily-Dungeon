@@ -96,6 +96,7 @@ function Introduction() {
           <button style={buttonStyle}>Start Your Adventure</button>
         </Link>
       </div>
+      
     </div>
   );
 }
