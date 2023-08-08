@@ -1,11 +1,12 @@
-
+import knight from './images/JakeKnight.png'
+import golem from './images/Golem.png';
 
 const playerStats = {
   level: 1,
   maxHealth: 177,
   name: 'Knight',
 
-  img: './assets/Images/Fighter.png',
+  img: knight,
 
 
   magic: 32,
@@ -17,7 +18,7 @@ const opponentStats = {
   level: 2,
   name: 'Golem',
   maxHealth: 188,
-  img: './assets/Images/Golem.png',
+  img: golem,
 
   magic: 50,
   attack: 32,
