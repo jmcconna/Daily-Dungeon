@@ -12,6 +12,8 @@ import CharacterSelect from './pages/CharacterSelect.jsx';
 import Introduction from './pages/Introduction.jsx';
 import GameLayout from './pages/GameLayout.jsx';
 import PageNotFound from './pages/404.jsx';
+import Trader from './pages/Trader.jsx';
+import Tavern from './pages/Tavern.jsx';
 import './assets/css/gameboard.css';
 import { setContext } from '@apollo/client/link/context';
 
@@ -48,6 +50,8 @@ function App() {
           <Route exact path="/introduction" element={<Introduction />} />
           <Route exact path="/gameplay" element={<GameLayout />} />
           <Route exact path="/combat" element={<Combat />} />
+          <Route exact path="/trader" element={<Trader />} />
+          <Route exact path="/tavern" element={<Tavern />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>
