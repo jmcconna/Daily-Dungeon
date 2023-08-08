@@ -19,8 +19,8 @@ import { setContext } from '@apollo/client/link/context';
 import NavBar from './components/NavBar.jsx';
 
 const httpLink = createHttpLink({
-  //uri: 'https://fathomless-brook-62747-69ac2fbd8802.herokuapp.com/graphql', // deploy with this
-  uri: 'http://localhost:3002/graphql', // test locally with this
+  uri: 'https://fathomless-brook-62747-69ac2fbd8802.herokuapp.com/graphql', // deploy with this
+  // uri: 'http://localhost:3002/graphql', // test locally with this
 });
 
 const authLink = setContext((_, { headers }) => {
