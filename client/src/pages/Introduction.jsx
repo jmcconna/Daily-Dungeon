@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import scroll from '../utils/images/scrl.jpg';
 
 function Introduction() {
   const texts = useMemo(() => [
@@ -16,6 +17,9 @@ function Introduction() {
   const [displayedTextIndex, setDisplayedTextIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState('');
   const [previousTexts, setPreviousTexts] = useState([]);
+
+  const windowSize = useRef([window.innerWidth, window.innerHeight]);
+  console.log(windowSize);
 
   useEffect(() => {
     if (displayedText.length === texts[displayedTextIndex].length) {
@@ -36,8 +40,10 @@ function Introduction() {
   const textStyles = {
     whiteSpace: 'nowrap',
     overflow: 'hidden',
-    textAlign: 'center',
-    color: 'white'
+    //textAlign: 'center',
+    color: 'black',
+    textStyles: 'bold',
+    //justifyContent: 'center'
   };
 
   const buttonStyle = {
@@ -64,7 +70,10 @@ function Introduction() {
   };*/
 
   return (
-    <div /*style={containerStyle}*/>
+    <div style={{ backgroundImage: `url(${scroll})`,
+    width: windowSize.current[0],
+    height: windowSize.current[1],
+    resizeMode: 'stretch'}}>
       <div className="center stack">
         <div>
           {previousTexts.map((text, index) => (
