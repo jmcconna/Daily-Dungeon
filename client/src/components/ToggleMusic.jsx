@@ -11,7 +11,7 @@ state = {
 	audio: new Audio(song),
 
 	// Set initial state of song
-	isPlaying: true,
+	isPlaying: false,
 };
 
 // Main function to handle both play and pause operations
@@ -36,16 +36,12 @@ playPause = () => {
 render() {
 	return (
 	<div>
-		{/* Show state of song on website */}
-		<p>
-		{this.state.isPlaying ?
-			"Song is Playing" :
-			"Song is Paused"}
-		</p>
 
 		{/* Button to call our main function */}
 		<button onClick={this.playPause}>
-		Play | Pause
+		{this.state.isPlaying ?
+			"Music ON" :
+			"Music OFF"}
 		</button>
 	</div>
 	);
