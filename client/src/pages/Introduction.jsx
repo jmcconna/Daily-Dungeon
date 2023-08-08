@@ -80,10 +80,11 @@ function Introduction() {
   };*/
 
   return (
-    <div class="bkground" style={{ backgroundImage: `url(${forest})`,
-    //width: windowSize.current[0],
-    //height: windowSize.current[1],
-    resizeMode: 'stretch'}}>
+    <div className="bkground" style={{ backgroundImage: `url(${forest})`,
+    width: windowSize.current[0],
+    height: windowSize.current[1],
+    alignSelf: 'center',
+    }}>
       <div className="center stack">
         <div>
           {previousTexts.map((text, index) => (
