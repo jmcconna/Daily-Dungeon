@@ -4,7 +4,7 @@ import { useAIOpponent, useBattleSequence } from '../../hooks/index.js';
 import { opponentStats, playerStats, wait } from '../../shared/index.js';
 import { BattleMenu, PlayerSummary, BattleAnnouncer } from '../index.js';
 
-const Battle = ({ onGameEnd, character }) => {
+const Battle = ({ onGameEnd, character,}) => {
   const [sequence, setSequence] = useState({});
 
   
