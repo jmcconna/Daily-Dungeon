@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import ToggleMusic from './ToggleMusic';
 
 
 function NavBar(){
@@ -18,7 +19,7 @@ return (
       <li class="nav-item">
         <a class="nav-link" href="#">Donate</a>
       </li>
-
+    <ToggleMusic/>
     </ul>
     
   </div>

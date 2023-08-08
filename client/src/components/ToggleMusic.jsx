@@ -11,7 +11,7 @@ state = {
 	audio: new Audio(song),
 
 	// Set initial state of song
-	isPlaying: false,
+	isPlaying: true,
 };
 
 // Main function to handle both play and pause operations
