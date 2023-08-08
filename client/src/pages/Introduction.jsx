@@ -12,7 +12,7 @@ function Introduction() {
     "Then, a voice, delicate yet urgent, emerges from the abyss of your mind:",
     "\"Adventurer, please wake up! I have great need of you. You do not know who I am yet, but you are the last hope for us...",
     "We must meet. Come to Bryll, a town to your south.",
-    "We must meet. Come to Bryll, a town to your south. Find me as quickly as possible; the world is in great peril. Do not delay. Time is of the essence.\"",
+    "Find me as quickly as possible; the world is in great peril. Do not delay. Time is of the essence.\"",
     "The words hang in the air, their weight pressing upon your mind like a solemn oath.",
     "The voice recedes, leaving you with a lingering sense of purpose and the lingering sensation of telepathic connection.",
     "With a determined exhale, you rise from your makeshift bedroll and scan the moonlit landscape.",
