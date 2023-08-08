@@ -1,8 +1,8 @@
 import { Bar } from '../index.js';
 import styles from './styles.module.css';
 
-const red = '#821400';
-const blue = '#1953cb';
+const red = '#8C3333';
+const blue = '#8C3333';
 
 const PlayerSummary = ({
   main,
