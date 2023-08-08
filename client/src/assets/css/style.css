@@ -32,3 +32,12 @@ body {
 .game-container canvas {
     image-rendering: pixelated;
 }
+
+button {
+    color: var(--color1);
+    border-color: var(--color2);
+}
+
+.bkground {
+    background-size: cover;
+}
