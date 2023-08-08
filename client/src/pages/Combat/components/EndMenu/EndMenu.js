@@ -34,7 +34,7 @@ const EndMenu = ({ winner, character }) => {
       ) : (
         <>
           <p className={styles.style}>You lost. Better luck next time!</p>
-          <button className={styles.startButton} onClick={() => navigate('/introduction')}>
+          <button className={styles.endButton} onClick={() => navigate('/tavern')}>
             Return home to heal...
           </button>
         </>

@@ -19,6 +19,7 @@ const characterResolvers = {
         .populate('armor');
     },
     getCharactersByUserID: async (_, { user }) => {
+      console.log('user', user);
       try {
         return await Character.find({ user })
           // .populate('inventory.item')
