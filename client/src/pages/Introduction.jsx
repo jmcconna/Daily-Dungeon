@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import scroll from '../utils/images/scrl.jpg';
+import forest from '../utils/images/forest.jpg';
 
 function Introduction() {
   const texts = useMemo(() => [
@@ -40,8 +41,8 @@ function Introduction() {
   const textStyles = {
     whiteSpace: 'nowrap',
     overflow: 'hidden',
-    //textAlign: 'center',
-    color: 'black',
+    textAlign: 'center',
+    color: 'white',
     textStyles: 'bold',
     //justifyContent: 'center'
   };
@@ -70,9 +71,9 @@ function Introduction() {
   };*/
 
   return (
-    <div style={{ backgroundImage: `url(${scroll})`,
-    width: windowSize.current[0],
-    height: windowSize.current[1],
+    <div class="bkground" style={{ backgroundImage: `url(${forest})`,
+    //width: windowSize.current[0],
+    //height: windowSize.current[1],
     resizeMode: 'stretch'}}>
       <div className="center stack">
         <div>
