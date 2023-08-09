@@ -46,20 +46,6 @@ To run tests, run the following command:
 npm test
 ```
 
-## Requirements
-* Create user account and store their information
-
-* Create concerts with date, band, venue, and location
-
-* Search bands and venues
-
-* Follow other users and bands
-
-* User profile page shows all concerts, venues, and locations
-
-* Band profile page shows all concerts, venues, and locations
-
-* Venue profile page shows all concerts, venues, and locations
 
 
 ## Screenshots
